@@ -1,0 +1,2 @@
+1. 使用canvg.js需要rgbcolor.js图像颜色相关组件，链接：https://download.csdn.net/download/jspseo/11235940 <br />
+2.使用方法参照： https://blog.csdn.net/lkmtao/article/details/44753925
