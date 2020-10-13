@@ -13,92 +13,75 @@
 
 <meta charset="utf-8" />
 
-<div id="capture" style="padding: 10px; background: #f5da55">
-    <h4 style="color: #000; ">Hello world!</h4>
+<div id="capture" style="padding: 10px; background: #f5da55;">
+	<h4 style="color: #000; ">Hello world!</h4>
+	
+
+	<input type="button" value="全随机"  onclick="onLoad(1)" />
+	<form >
+	背景色: <input type="color" id="color1" value="#ffcccc" />
+	格纹色1号: <input type="color" id="color2"  value="#DA70D6"/>
+	格纹色2号: <input type="color" id="color3"  value="#e5ffe5"/>
+	格纹色3号: <input type="color" id="color4"  value="#eddddd"/>
+	密度: <input type="number" id="numbercolor"  value="3"/>
+		<input type="button" value="半随机"  onclick="onLoad(0)" />
+	  </form>
 </div>
 
 
 <script>
 
-//选取颜色
-var color1 = "#ffcccc";  //
-var color2 = "#b3ccff";
-var color3 = "#e5ffe5";  //背景色
-
-//每个颜色，随机生成几条线
-var number1 = Math.random();
-numbercolor1 = Math.ceil(number1 * 3);
-var number2 = Math.random();
-numbercolor2 = Math.ceil(number2 * 3);
-//document.write(number1);
 
 
-//生成随机位置，可以多次实验
-var x1 = 20;
-var x2 = 50;
-var x3 = 90;
-
-//宽度也随机
-var width1 = 20;
-var width2 = 30;
-var width2 = 60;
-
-	function onLoad(){
-		var mysvg = document.getElementById("svg_my");
+	function onLoad(random){
 
 
-/*		
-		var rectObj1 = document.createElementNS("http://www.w3.org/2000/svg","rect");
-		var rectObj1H = document.createElementNS("http://www.w3.org/2000/svg","rect");
-		if(rectObj1){
-			rectObj1.setAttribute("width",width1);
-			rectObj1.setAttribute("height",200);
-			rectObj1.setAttribute('x', x1);
-			//rectObj.setAttribute("style","fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)");
-			rectObj1.setAttribute("style","fill:"+color1+";stroke-width:1;stroke:"+color1);  //color 1
-			mysvg.appendChild(rectObj1);
-			//alert("hello");
 
-            //竖着
-			rectObj1H.setAttribute("width",200);
-			rectObj1H.setAttribute("height",width1);
-			rectObj1H.setAttribute('y', x1);
-			//rectObj.setAttribute("style","fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)");
-			rectObj1H.setAttribute("style","fill:"+color1+";stroke-width:1;stroke:"+color1);  //color 1
-			mysvg.appendChild(rectObj1H);
-		}
+		
+if(random){
 
+	console.log("调用随机模式",random)
 
-		var mysvg2 = document.getElementById("svg_my");
-		var rectObj2 = document.createElementNS("http://www.w3.org/2000/svg","rect");
-		var rectObj2H = document.createElementNS("http://www.w3.org/2000/svg","rect");
-		if(rectObj2){
-			rectObj2.setAttribute("width",width2);
-			rectObj2.setAttribute("height",200);
-			rectObj2.setAttribute('x', x2);
-			//rectObj.setAttribute("style","fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)");
-			rectObj2.setAttribute("style","fill:"+color2+";stroke-width:1;stroke:"+color2);  //color 1
-			mysvg2.appendChild(rectObj2);
-			//alert("hello");
+var color1 ='#'+Math.floor(Math.random()*16777215).toString(16);
+var color2 ='#'+Math.floor(Math.random()*16777215).toString(16);
+var color3 ='#'+Math.floor(Math.random()*16777215).toString(16);
+var color4 ='#'+Math.floor(Math.random()*16777215).toString(16);
 
-			//竖着
-			rectObj2H.setAttribute("width",200);
-			rectObj2H.setAttribute("height",width2);
-			rectObj2H.setAttribute('y', x2);
-			//rectObj.setAttribute("style","fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)");
-			rectObj2H.setAttribute("style","fill:"+color2+";stroke-width:1;stroke:"+color2);  //color 1
-			mysvg.appendChild(rectObj2H);
-		}
+console.log("随机颜色",color1,color2,color3,color4)
 
+//每个颜色，随机生成几条线,//可以调整密集度 针对所有颜色
+var number1 = Math.random();              
+numbercolor1 = Math.ceil(number1 * 10);    
+console.log("随机密度",numbercolor1)
 
-*/
-        //背景色
+}else {  //受控状态
+	console.log("调用半自动模式",random)
+//读取颜色
+var color1 =document.getElementById("color1").value;
+var color2 =document.getElementById("color2").value;
+var color3 =document.getElementById("color3").value;
+var color4 =document.getElementById("color4").value;
+
+console.log("几种颜色",color1,color2,color3,color4)
+
+//每个颜色，随机生成几条线,//可以调整密集度 针对所有颜色
+var number1 = Math.random();              
+numbercolor1 = Math.ceil(number1 * (document.getElementById("numbercolor").value));    
+console.log("密度",document.getElementById("numbercolor").value)
+
+}
+
+//生成SVG
+var mysvg = document.getElementById("svg_my");
+var mysvgWidth = 300;
+
+//横纹背景色
 		var rectObj0 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 		rectObj0.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObj0.setAttribute("width",200);
-		rectObj0.setAttribute("height",200);
-		 rectObj0.setAttribute("style","fill:"+color1+";stroke-width:1;stroke:"+color1);  //color 1
-         document.querySelector('svg').appendChild(rectObj0);
+		rectObj0.setAttribute("width",mysvgWidth);
+		rectObj0.setAttribute("height",mysvgWidth);
+		rectObj0.setAttribute("style","fill:"+color1+";stroke-width:0;stroke:"+color1);  //color 1
+        document.querySelector('svg').appendChild(rectObj0);
 
 
 
@@ -110,18 +93,53 @@ var width2 = 60;
 		for (var i = 1; i <= numbercolor1; i += 1) {
         var rectObj1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 		rectObj1.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObj1.setAttribute("width",200);
+		rectObj1.setAttribute("width",mysvgWidth);
 		var temph = Math.ceil(Math.random()*50);
-		rectObj1.setAttribute("height",temph);
-		 
+         var tempy = Math.ceil(Math.random()*mysvgWidth);
 
-         var tempy = Math.ceil(Math.random()*200);
+		 //首先判断自己有没有重叠？
+		 for (var m = 0; m < rectObj1Array.length; m += 1) {  //判断y的位置与自己是否重叠、包裹
+			console.log("自己还在循环")
+			for (var j=0;j<10000;j++) //判断10000次 万次后可能出现交叉错误
+        {
+			if(rectObj1Array[m][1]<tempy&&tempy<rectObj1Array[m][0]+rectObj1Array[m][1])
+
+			{	
+				
+				tempy = Math.ceil(Math.random()*mysvgWidth); //重新生成
+			}
+			else {
+				console.log(rectObj1Array[m][1],rectObj1Array[m][0]+rectObj1Array[m][1],tempy)
+				break;}	
+        }
+		}
+		console.log("y的最终数值"+tempy);
+
+		for (var m = 0; m < rectObj1Array.length; m += 1) {  //判断y+h的位置
+			for (var j=0;j<10000;j++) //判断10000次
+        {
+			if(rectObj1Array[m][1]<(temph+tempy)&&tempy<rectObj1Array[m][1])
+
+        {	
+	    console.log(tempy,rectObj1Array[m][1],temph+tempy,"比较并重新生成")
+	    temph = Math.ceil(Math.random()*(rectObj1Array[m][1]-tempy)); //重新生成,宽度不能超过
+        }
+			else {
+				console.log(rectObj1Array[m][1],rectObj1Array[m][0]+rectObj1Array[m][1],temph)
+				break;}
+			
+        }
+		}
+		console.log("h的最终数值"+temph);
+
+
+		 rectObj1.setAttribute("height",temph);
 		 rectObj1.setAttribute('y',tempy );
 
 		 console.log("哎呀，被记录了",temph,tempy);
          rectObj1Array.push([temph,tempy]);
 
-		 rectObj1.setAttribute("style","fill:"+color2+";stroke-width:1;stroke:"+color2);  //color 2
+		 rectObj1.setAttribute("style","fill:"+color2+";stroke-width:0;stroke:"+color2);  //color 2
          document.querySelector('svg').appendChild(rectObj1);
          }
 
@@ -129,26 +147,114 @@ var width2 = 60;
 
 	    //颜色2
 		var rectObj2Array =   new Array(); //动态数组记录横纹位置
+		var rectObj1_2Array = rectObj1Array.concat(); //动态数组记录横纹位置,1_2拼合  js复制数组,原数组不变,直接相等会导致地址被复制
 		for (var i = 1; i <= numbercolor1; i += 1) {
         var rectObj2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 		rectObj2.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObj2.setAttribute("width",200);
+		rectObj2.setAttribute("width",mysvgWidth);
 
 		var temph = Math.ceil(Math.random()*50);
+		var tempy = Math.ceil(Math.random()*mysvgWidth);
+
+		//这些判断不能分开进行，否则满足了下一个条件又不能满足上一个条件，所以需要拼接两个数组进行判断，按照这个思路多一个颜色也可以了
+		//可以先判断好y
+
+		/*
+//判断自己
+for (var m = 0; m < rectObj1_2Array.length; m += 1) {  //判断y的位置与自己和他人是否重叠
+			console.log("自己还在循环")
+			for (var j=0;j<10000;j++) //判断10000次 万次后可能出现交叉错误
+        {
+			if(rectObj1_2Array[m][1]<tempy&&tempy<rectObj1_2Array[m][0]+rectObj1_2Array[m][1])
+
+			{	
+				
+				tempy = Math.ceil(Math.random()*200); //重新生成
+			}
+			else {
+				console.log(rectObj1_2Array[m][1],rectObj1_2Array[m][0]+rectObj1_2Array[m][1],tempy)
+				break;}	
+        }
+		}
+
+
+		for (var m = 0; m < rectObj1Array.length; m += 1) {  //判断y+h的位置
+			for (var j=0;j<10000;j++) //判断10000次
+        {
+			if(rectObj1Array[m][1]<(temph+tempy)&&tempy<rectObj1Array[m][1])
+
+        {	
+	    console.log(tempy,rectObj1Array[m][1],temph+tempy,"比较并重新生成")
+	    temph = Math.ceil(Math.random()*(rectObj1Array[m][1]-tempy)); //重新生成,宽度不能超过
+        }
+			else {
+				console.log(rectObj1Array[m][1],rectObj1Array[m][0]+rectObj1Array[m][1],temph)
+				break;}
+			
+        }
+		}
+
+
+*/
+ //判断区域重叠
+ for (var m = 0; m < rectObj1_2Array.length; m += 1) {  //判断y的位置与上一个颜色是否重叠
+			for (var j=0;j<10000;j++) //判断10000次 万次后可能出现交叉错误
+        {
+			if(rectObj1_2Array[m][1]<tempy&&tempy<rectObj1_2Array[m][0]+rectObj1_2Array[m][1])
+
+			{	
+				console.log("还在循环")
+				tempy = Math.ceil(Math.random()*mysvgWidth); //重新生成
+			}
+			else {
+				console.log(rectObj1_2Array[m][1],rectObj1_2Array[m][0]+rectObj1_2Array[m][1],tempy)
+				break;}
+			
+        }
+		}
+		console.log("color 3 y的最终数值"+tempy);
+
+
+		for (var m = 0; m < rectObj1_2Array.length; m += 1) {  //判断y+h的位置，不能进入或者包裹
+		console.log("需要判断"+rectObj1_2Array.length+"次");
+			for (var j=0;j<10000;j++) //判断10000次
+        {
+			if(rectObj1_2Array[m][1]<(temph+tempy)&&tempy<rectObj1_2Array[m][1])
+
+			{	
+				console.log(tempy,rectObj1_2Array[m][1],temph+tempy,"比较并重新生成")
+				temph = Math.ceil(Math.random()*(rectObj1_2Array[m][1]-tempy)); //重新生成,宽度不能超过
+			}
+			else {
+				console.log(tempy,rectObj1_2Array[m][1],temph+tempy,"最终结果")
+				break;}
+			
+        }
+		}
+		console.log("h的最终数值"+temph);
+
+
+
+
 		rectObj2.setAttribute("height",temph);
+		rectObj2.setAttribute('y', tempy);
+		console.log("哎呀，被记录了",temph,tempy);
+		rectObj1_2Array.push([temph,tempy]);
+		
+		rectObj2Array.push([temph,tempy]);
+		
+		console.log("写入数组",rectObj1Array,rectObj2Array,rectObj1_2Array)
 
-		 var tempy = Math.ceil(Math.random()*200);
-		 rectObj2.setAttribute('y', tempy);
 
-		 console.log("哎呀，被记录了",temph,tempy);
-         rectObj2Array.push([temph,tempy]);
-
-
-		 rectObj2.setAttribute("style","fill:"+color3+";stroke-width:1;stroke:"+color3);  //color 3
+		 rectObj2.setAttribute("style","fill:"+color3+";stroke-width:0;stroke:"+color3);  //color 3
          document.querySelector('svg').appendChild(rectObj2);
          }
 
 		 console.log("哎呀，记录好了",rectObj2Array);
+
+
+
+		
 
 
         //竖纹-需要底色
@@ -157,13 +263,13 @@ var width2 = 60;
 		 for (var i = 1; i <= numbercolor1; i += 1) {
         var rectObj3 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 		rectObj3.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObj3.setAttribute("height",200);
+		rectObj3.setAttribute("height",mysvgWidth);
 
 		console.log("抽出来了",rectObj1Array[i-1][0]);
 		rectObj3.setAttribute("width",rectObj1Array[i-1][0]);
 		 
 		 rectObj3.setAttribute('x', rectObj1Array[i-1][1]);
-		 rectObj3.setAttribute("style","fill:"+color2+";stroke-width:1;stroke:"+color2);  //color 2
+		 rectObj3.setAttribute("style","fill:"+color2+";stroke-width:0;stroke:"+color2);  //color 2
          document.querySelector('svg').appendChild(rectObj3);
          }
 
@@ -171,27 +277,173 @@ var width2 = 60;
 		for (var i = 1; i <= numbercolor1; i += 1) {
         var rectObj4 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 		rectObj4.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObj4.setAttribute("height",200);
+		rectObj4.setAttribute("height",mysvgWidth);
 
 		console.log("抽出来了",rectObj2Array[i-1][0]);
 		rectObj4.setAttribute("width",rectObj2Array[i-1][0]);
 		
 		 rectObj4.setAttribute('x', rectObj2Array[i-1][1]);
-		 rectObj4.setAttribute("style","fill:"+color3+";stroke-width:1;stroke:"+color3);  //color 3
+		 rectObj4.setAttribute("style","fill:"+color3+";stroke-width:0;stroke:"+color3);  //color 3
          document.querySelector('svg').appendChild(rectObj4);
          }
 
 
-         //像素化
-		
-         
+         //像素
 
-		//蒙版  -显示白色的区域 不显示黑色的区域  进行图像计算  ，不转jpg 直接对svg修改/或者重新生成/控制像素canvas？背景色线条line
+		//var  svgHtml=document.getElementById("div_svg").innerHTML.trim();
+	   // console.log(svgHtml);
+	    // var canvasId=document.getElementById("canvas");
+		// console.log(canvasId);
+        //canvg(canvasId,svgHtml);
+	
+/*
+
+var svg = document.getElementById('div_svg').innerHTML;
+
+var canvas = document.getElementById('canvas');
+
+		var c = canvas.getContext('2d');
+
+//新建Image对象
+var img = new Image();
+
+//svg内容
+img.src = 'data:image/svg+xml,' + unescape(encodeURIComponent(svg));//svg内容中可以有中文字符
+img.src = 'data:image/svg+xml,' + svg;//svg内容中不能有中文字符
+
+
+//svg编码成base64
+img.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svg)));//svg内容中可以有中文字符
+img.src = 'data:image/svg+xml;base64,' + window.btoa(svg);//svg内容中不能有中文字符
+
+//img.src = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602439783273&di=7ab8f861ce5d3437d29a365537782ac6&imgtype=0&src=http%3A%2F%2Fstatic.open-open.com%2Flib%2FuploadImg%2F20170301%2F20170301142335_522.png"
+//console.log(img)
+
+//图片初始化完成后调用
+img.onload = function() {
+	//将canvas的宽高设置为图像的宽高
+	setTimeout("alert('对不起, 要你久候')", 3000 )
+	//alert('加载完毕')
+	canvas.width = img.width;
+	canvas.height = img.height;
+	console.log(img)
+	//canvas画图片
+	c.drawImage(img, 0, 0);
+
+	//将图片添加到body中
+	document.body.appendChild(img)
+
+}
+
+
+*/
+
+//蒙版  -显示白色的区域 不显示黑色的区域  进行图像计算  ，不转jpg 直接对svg修改/或者重新生成/控制像素canvas？背景色线条line
 		//【定义一个方阵矩阵】  蒙版蒙在横纹上  矩阵计算  对横纹填充图案 https://www.douban.com/group/topic/172691860/?author=1
 		//对每个像素填充吗？ 其实就是对横纹的剪贴蒙版  消除黑纹区域的图案
 
+//绘制svg条纹
+
+        //右上斜纹
+		for (var i = 1; i <= mysvgWidth; i += 2) {
+        var rectObjline = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+		rectObjline.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+
+		 rectObjline.setAttribute("x1",i);
+		  rectObjline.setAttribute("x2",mysvgWidth);
+		  rectObjline.setAttribute("y1",0);
+		  rectObjline.setAttribute("y2",mysvgWidth-i);
+
+		rectObjline.setAttribute("style","stroke-width:0.5;stroke:"+color1);  //color 2
+         document.querySelector('svg').appendChild(rectObjline);
+         }
+
+		 //左下斜纹
+		 for (var i = 1; i <= mysvgWidth; i += 2) {
+        var rectObjline2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+		rectObjline2.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+
+		 rectObjline2.setAttribute("x1",0);
+		  rectObjline2.setAttribute("x2",mysvgWidth-i);
+		  rectObjline2.setAttribute("y1",i);
+		  rectObjline2.setAttribute("y2",mysvgWidth);
+
+		rectObjline2.setAttribute("style","stroke-width:0.5;stroke:"+color1);  //color 2
+         document.querySelector('svg').appendChild(rectObjline2);
+         }
+
+		 //相同颜色处无线条  直接判断矩阵即可
+		 //rectObj1Array  第一个颜色
+		 for (var i = 0; i < rectObj1Array.length; i += 1) {
+			for (var j = rectObj1Array.length-1; j >= 0; j -= 1) {
+		var rectObjSame = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+		rectObjSame.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+		console.log("选择重复",rectObj1Array[i][0]),rectObj1Array[j][0];
+		rectObjSame.setAttribute("height",rectObj1Array[i][0]);
+		rectObjSame.setAttribute("width",rectObj1Array[j][0]);
+		
+		rectObjSame.setAttribute('x', rectObj1Array[j][1]);
+		rectObjSame.setAttribute('y', rectObj1Array[i][1]);
+		rectObjSame.setAttribute("style","fill:"+color2+";stroke-width:0;stroke:"+color2);  //color 3
+         document.querySelector('svg').appendChild(rectObjSame);
+
+			}
+         }
+
+		//rectObj2Array  第二个颜色
+		for (var i = 0; i < rectObj2Array.length; i += 1) {
+			for (var j = rectObj1Array.length-1; j >= 0; j -= 1) {
+		var rectObjSame2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+		rectObjSame2.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+		console.log("选择重复",rectObj2Array);
+		rectObjSame2.setAttribute("height",rectObj2Array[i][0]);
+		rectObjSame2.setAttribute("width",rectObj2Array[j][0]);
+		
+		rectObjSame2.setAttribute('x', rectObj2Array[j][1]);
+		rectObjSame2.setAttribute('y', rectObj2Array[i][1]);
+		rectObjSame2.setAttribute("style","fill:"+color3+";stroke-width:0;stroke:"+color3);  //color 3
+         document.querySelector('svg').appendChild(rectObjSame2);
+         }
+		}
+
+		//不同颜色交叠 横纹在上 透出底部的竖纹 条纹
+		for (var i = 0; i < rectObj1Array.length; i += 1) {  //横着一次
+			for (var j = 0; j < rectObj2Array.length; j += 1) {
+				console.log("color颜色交叉矩形计数",rectObj1Array,rectObj2Array)
+		var rectObjNotSame = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+		rectObjNotSame.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+
+		rectObjNotSame.setAttribute("height",rectObj1Array[i][0]);
+		rectObjNotSame.setAttribute("width",rectObj2Array[j][0]);
+		
+		rectObjNotSame.setAttribute('x', rectObj2Array[j][1]);
+		rectObjNotSame.setAttribute('y', rectObj1Array[i][1]);
+		rectObjNotSame.setAttribute("style","fill:"+color2+";stroke-width:0;stroke:"+color2+";fill-opacity:0.5");  //color 2   rectObj1Array
+         document.querySelector('svg').appendChild(rectObjNotSame);
+         }
+		}
+
+		for (var i = 0; i < rectObj2Array.length; i += 1) { //竖着一次
+			for (var j = 0; j < rectObj1Array.length; j += 1) {
+		var rectObjNotSame_a = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+		rectObjNotSame_a.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+
+		rectObjNotSame_a.setAttribute("height",rectObj2Array[i][0]);
+		rectObjNotSame_a.setAttribute("width",rectObj1Array[j][0]);
+		
+		rectObjNotSame_a.setAttribute('x', rectObj1Array[j][1]);
+		rectObjNotSame_a.setAttribute('y', rectObj2Array[i][1]);
+		rectObjNotSame_a.setAttribute("style","fill:"+color3+";stroke-width:0;stroke:"+color3+";fill-opacity:0.5");  //color 3   rectObj1Array
+         document.querySelector('svg').appendChild(rectObjNotSame_a);
+         }
+		}   
+
+		//
 	}
 	window.onload = onLoad;
+
+
+ 
 </script>
 
 
@@ -199,37 +451,38 @@ var width2 = 60;
 
 <body style="text-align:center;background-color: bisque；padding-top:100px;">
 
-<h5>hello word</h5>
+<h5>随机格柄</h5>
 
-<form action="form_action.asp" method="get">
-    First name: <input type="text" name="fname" />
-    Last name: <input type="text" name="lname" />
-    <input type="submit" value="Submit" />
-  </form>
 
 <div id="div1" >
 
-？？？？？这啥玩意儿啊
-
-<svg id="svg_my" style="border:1px solid #000;width:200px;height:200px" version="1.1" xmlns="http://www.w3.org/2000/svg">
-		
+<div id="div_svg">
+<svg id="svg_my" style="border:1px solid #000;width:300px;height:300px" version="1.1" xmlns='http://www.w3.org/2000/svg'>
 </svg>
+</div>
 
-<canvas id="canvas" width="1000px" height="600px"></canvas> 
+<!-- <canvas id="canvas" width="1000px" height="600px"></canvas>  -->
 
 <script>
 	//svg转png  canvg html2canvas
-	html2canvas(document.querySelector("#div1")).then(canvas => 
-	{document.body.appendChild(canvas)});   
+	// html2canvas(document.querySelector("#div1")).then(canvas => 
+	// {document.body.appendChild(canvas)});   
 
+	
 // 	window.onload = function() {
 
-// 		var  svgHtml=document.getElementById("svg_my").innerHTML.trim();
-//             var canvasId=document.getElementById("canvas");
-//             canvg(canvasId,svgHtml);
-//   //canvg(document.getElementById('svg_my'), '<svg>...</svg>')
+// var  svgHtml=document.getElementById("div_svg").innerHTML.trim();
+// 	console.log(svgHtml);
+// 	var canvasId=document.getElementById("canvas");
+//    //canvg(canvasId,svgHtml);
+// //canvg(document.getElementById('svg_my'), '<svg>...</svg>')
 
 // }
+
+
+             //canvg(canvasId,svgHtml);
+
+//发布 上传后 index页面 设置githubpages https://moonmooncha.github.io/Lattice-Generator/
 
 	
 </script>
