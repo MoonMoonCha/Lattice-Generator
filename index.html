@@ -5,6 +5,10 @@
 <script src="js/html2canvas.min.js"></script>
 <script src="js/rgbcolor.js"></script> 
 <script src="js/canvg.js"></script> 
+<script  src="js/Vibrant.js"></script> 
+<script  src="js/Vibrant.min.js"></script> 
+<script  src="js/rgbaster.min.js"></script> 
+
 <title></title>
 <meta charset="utf-8" />
 
@@ -21,20 +25,57 @@
 	</form>
 	密度: <input type="number" id="numbercolor"  value="3"/>
 	<input type="button" value="半随机生成"  onclick="onLoad(0)" />
+    提取颜色：<button type="button" onclick="exaColor()">提取</button>
 </div>
 
-<!-- <script>
-	function addColor(){
-		var addColor = document.getElementById("colorCnotroll");
-      //创建input
-        var input = document.createElement("input");
-        input.type = "color";
-		input.name = "colorAdd";//"questions[" + count + "].name";
-        input.id = "colorAdds";//"questions[" + count + "]";
-		input.value="#F5B400";
-        addColor.appendChild(input);       
+
+
+
+<script>
+
+	//图片取色器
+	function exaColor(){
+
+		var img = document.createElement('img');
+		img.setAttribute('src', 'http://4.pic.9ht.com/thumb/up/2014-8/201482691356_160_160.jpg')
+		console.log(img)
+
+		//var img = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602623336940&di=6623cbd84a6b3067372ab8f9f53d6eb5&imgtype=0&src=http%3A%2F%2Fawb.img.xmtbang.com%2Fimg%2Fuploadnew%2F201604%2F22%2F1ddd347c168744a5bff0f7e6a845b6fc.jpg'
+ 
+
+        img.addEventListener('load', function() {
+        var vibrant = new Vibrant(img);
+        var swatches = vibrant.swatches()
+        for (var swatch in swatches)
+        if (swatches.hasOwnProperty(swatch) && swatches[swatch])
+            console.log(swatch, swatches[swatch].getHex())
+		});
+    /*
+     * Results into:
+     * Vibrant #7a4426
+     * Muted #7b9eae
+     * DarkVibrant #348945
+     * DarkMuted #141414
+     * LightVibrant #f3ccb4
+     */
+	
+// 	// var img = document.getElementById('image');
+// // 或者
+// var img = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602623336940&di=6623cbd84a6b3067372ab8f9f53d6eb5&imgtype=0&src=http%3A%2F%2Fawb.img.xmtbang.com%2Fimg%2Fuploadnew%2F201604%2F22%2F1ddd347c168744a5bff0f7e6a845b6fc.jpg'
+ 
+// RGBaster.colors(img, {
+//   success: function(payload) {
+//     // payload.dominant是主色，RGB形式表示
+//     // payload.secondary是次色，RGB形式表示
+//     // payload.palette是调色板，含多个主要颜色，数组
+//     console.log(payload.dominant);
+//     console.log(payload.secondary);
+//     console.log(payload.palette);
+//   }
+// });
+    
 	}
-</script> -->
+</script>
 
 
 <script>
