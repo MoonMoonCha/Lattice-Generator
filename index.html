@@ -5,35 +5,335 @@
 <script src="js/html2canvas.min.js"></script>
 <script src="js/rgbcolor.js"></script> 
 <script src="js/canvg.js"></script> 
-<script  src="js/Vibrant.js"></script> 
+<!-- <script  src="js/Vibrant.js"></script> 
 <script  src="js/Vibrant.min.js"></script> 
-<script type="text/javascript" src="js/rgbaster.js"></script> 
+<script type="text/javascript" src="js/rgbaster.js"></script>  -->
 <link rel="shortcut icon" href="favicon.ico">
+
+
+<style type="text/css">
+
+
+
+	*{
+	margin: 0;
+	padding: 0;
+	}
+	.parent{
+		position: absolute; 
+		width:80%;
+		height:80%;
+		margin: 0 auto;
+		margin-top:5%;
+		margin-left:10%;
+	}
+	
+
+	.lattice{
+	/* flex: 1; */
+	z-index: 3;
+	/* width:100%; */
+	/* height:65%; */
+	margin-top:6%;
+	margin-left:33%;
+	position: absolute;
+	/* background: blue; */
+	}
+
+	.maskimg{
+	z-index: 4;
+	margin-top:6%;
+	margin-left:33%;
+	position: absolute;
+	/* background: red; */
+	}
+
+	.white{
+		/* flex: 1; */
+	   width: 100%;
+       height: 500px;
+       margin: 0 auto;
+	   position: absolute;
+	   background-color: #fffffa;
+	   border-radius:10px;
+
+	}
+
+	.capture{
+		position: relative;
+
+	}
+
+	#colorCnotroll{
+		margin-left: 20%;
+
+	}
+
+	.colorbutton{
+    width: 32.2%;
+    height: 20px;
+	border: 0;
+}
+
+.colorbuttonsmall{
+    width: 10%;
+    height: 15px;
+	border: 0;
+}
+#numbercolor{
+	width: 30px;
+    height: 20px;
+
+}
+
+.GeButton1{
+    border: none;
+    color: black;
+    font-family:Arial;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px 2px;
+    cursor: pointer;
+	font-family: "STXihei";
+	/* https://www.jb51.net/css/67658.html */
+
+}
+
+.GeButton{
+	cursor:pointer;
+    position: absolute;
+    font-size: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border:none;
+    box-shadow: 0 2px 5px rgba(0,0,0,.4);
+    background: -webkit-linear-gradient(top,#fff,#d5dbe1);
+    background: -moz-linear-gradient(top,#fff,#d5dbe1);
+    background: -ms-linear-gradient(top,#fff,#d5dbe1);
+    background: -o-linear-gradient(top,#fff,#d5dbe1);
+    -webkit-transition: all .13s ease-out;
+       -moz-transition: all .13s ease-out;
+         -o-transition: all .13s ease-out;
+            transition: all .13s ease-out;
+}
+#GeButton1{
+    text-align: left;
+    margin-left:1%;
+	margin-top: 20%;
+}
+
+
+#GeButton2{
+    text-align: right;
+    margin-left: 55%;
+	margin-top: 20%;
+}
+.GeButton:after {
+display: inline-block;
+    font-family: 'icomoon';
+    font-size: 24px;
+    color: #bdc0c1;
+    content: attr(data-icon);
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    width: 64px;
+    line-height: 64px;
+    margin: 10px;
+    border-radius: 32px;
+    border: 1px solid #efefef;
+    box-shadow: -1px 0 0 #dbdcdd,1px 0 0 #dbdcdd,0 1px 0 #d0d1d2,0 0 8px #fff;
+    background: -webkit-linear-gradient(top left,#fcfcfc 50%,#dfe4e8);
+}
+.GeButton:first-child:after {
+    content: "\21";
+}
+.GeButton:last-child:after {
+    content: "\25";
+}
+.GeButton:hover:after {
+    color: #19a6e4;
+    box-shadow: 0 1px 3px #d7d8d9 inset;
+    background: -webkit-radial-gradient(#dbeef8 ,#f2f4f6 50%);
+}
+.GeButton:hover {
+    color: black;
+    box-shadow: 0 1px 3px #d7d8d9 inset;
+    background: -webkit-radial-gradient(#dbeef8 ,#f2f4f6 50%);
+}
+
+.GeButton:active {
+    top: 3px;
+    box-shadow: 0 1px 3px #d7d8d9 inset;
+}
+
+
+
+.maskbutton_DIV{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+.maskbutton{
+    border: none;
+    color: black;
+    font-family:Arial;
+    padding: 10px 10px;
+    text-align: right;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 10px 10px;
+    cursor: pointer;
+	font-family: "STXihei";
+	border-radius: 5px;
+}
+
+#maskbutton1{
+	margin-right: 0px;
+
+}
+#maskbutton2{
+	margin-left: 5px;
+
+}
+
+.probutton{
+    border: none;
+    color: black;
+	background-color:transparent;
+    font-family:Arial;
+    padding: 10px 24px;
+    position: absolute;
+	right:0;
+    text-decoration: none;
+    /* display: inline-block; */
+    font-size: 15px;
+    text-align: right;
+    cursor: pointer;
+	font-family: "STXihei";
+	/* https://www.jb51.net/css/67658.html */
+
+}
+
+
+.uplobutton
+{
+    border: none;
+    color: black;
+    font-family:Arial;
+    padding: 10px 24px;
+	background-color:transparent;
+    position: relative;
+    text-decoration: none;
+    /* display: inline-block; */
+    font-size: 10px;
+    text-align: left;
+    cursor: pointer;
+	font-family: "STXihei";
+	/* https://www.jb51.net/css/67658.html */
+
+}
+
+	
+	</style>
 
 <title>随机格柄生成机</title>
 
-<body style="text-align:center;background-color: bisque；padding-top:100px;">
-	<h5>随机格柄</h5>
-	<div id="div_svg">
-	<svg id="svg_my" style="border:1px solid #000;width:300px;height:300px" version="1.1" xmlns='http://www.w3.org/2000/svg'>
-	</svg>
+<body  style="text-align:center;background-color: #fffffa;width: 100%;height:100%">
+	
+
+		<!-- <div class="parent">
+			<div class="left" width="30%" height="400px" style="text-align:left;">
+				<iframe src="http://www.matools.com/image-color/?embed" 
+			 scrolling="yes" style="border:0px;">
+		</iframe>
+			</div> -->
+
+   <div class = "parent" >
+	
+			
+	<div class = "white" id="white"  style="background-color: #fffffa">
+
+		<a  href = "http://www.matools.com/image-color/?embed" target="_blank" >
+		<button  class = "uplobutton" 
+		title="上传图片，取出主色，请记下三种颜色，以便生成格纹">Take color from pictures!</button>
+		</a>
+		<button  class = "probutton" 
+		title="Q:图片可以下载吗？&#13;A:由于开发时间有限，您只能截图（无限高清放大）而不是直接下载图片。&#13;
+			   Q:如何制作格裙样机？&#13;A:。&#13;
+			   Q:如何制作格裙？&#13;A:找别人帮你做。&#13;
+			   Q:成图可以商用吗？&#13;A:我认为店主不会要。&#13;
+			   Q:这个工具怎么使用？&#13;A:点击页面下方'月亮猹'观看教程视频。&#13;
+			   Q:为什么有的图有bug？&#13;A:因为开发者累了。&#13;
+			   Q:你还有什么问题？&#13;A:你没有了。&#13;
+		" 
+		>Q&A?</button>
+
+		<div class = "maskbutton_DIV">
+		<button class = "maskbutton" id="maskbutton1" 
+		title="每次点击，都能随机生成一个遮罩，如果您感觉卡住了，那只是随机到了同一个遮罩哦~"
+		onclick="onMask(1)"  >Mask</button>
+		<button class = "maskbutton" id="maskbutton2" onclick="onMask(0)" >No Mask</button>
+		</div>
+
+		<input class ="GeButton" type="button"  id="GeButton1"
+		title="随机生成颜色、密度、条纹位置"
+		value="全随机生成"  onclick="onLoad(1)" />
+	   <input class ="GeButton" type="button"  id="GeButton2"
+		title="您可以在上方自定义三个主色以及条纹密度，随机生成辅色和条纹位置"
+		value="半随机生成"  onclick="onLoad(0)" />
+
+
 	</div>
+
+	
+
+
+	<div class="lattice" id="div_svg"  >
+
+	<img src="img/latt.png"  id="title_img" alt="title"  style="position: absolute;  top: -50px;width: 100%;"/>
+	<svg id="svg_my" style="width:100%;height:300px" version="1.1" xmlns='http://www.w3.org/2000/svg'>
+	</svg>
+
+	
+
+	<div class = "capture" id="capture" >
+		<!-- <h4 style="color: #000; ">Hello world!</h4> -->
+
+		 <input class = "colorbutton" type="color" title="背景色"id="color1" value="#ffcccc" />
+		 <input class = "colorbutton" type="color" title="主色1" id="color2"  value="#DA70D6"/>
+		 <input class = "colorbutton" type="color" title="主色2" id="color3"  value="#e5ffe5"/>
+		 <form id="colorCnotroll" title="随机辅助色">
+
+		 </form>
+		
+
+
+		 <input type="number" id="numbercolor" title="格纹密度上限" value="3"/>
+
+		
+
+	</div>
+
+	</div>
+
+	<div class="maskimg" id="img_mask"  ></div>
+
+	</div>
+
+
+	<a href="https://space.bilibili.com/421178217">
+		<img src="img/moonmooncha.png"  alt="月亮猹"  style="position: fixed;  bottom: 0px;left:46%;width: 50px;height:20px;"></img>
+	</a>
+
 </body>
 
-<div id="capture" style="padding: 10px; background: #f5da55;">
-	<h4 style="color: #000; ">Hello world!</h4>
-	<input type="button" value="全随机生成"  onclick="onLoad(1)" />
-	背景色（可自定义）: <input type="color" id="color1" value="#ffcccc" />
-	主色1（可自定义）: <input type="color" id="color2"  value="#DA70D6"/>
-	主色2（可自定义）: <input type="color" id="color3"  value="#e5ffe5"/>
-	<form id="colorCnotroll">
-	辅色（随机搭配）：
-	<!-- <button type="button" onclick="addColor()">+</button> -->
-	</form>
-	密度: <input type="number" id="numbercolor"  value="3"/>
-	<input type="button" value="半随机生成"  onclick="onLoad(0)" />
-    提取颜色：<button type="button" onclick="exaColor()">提取</button>
-</div>
+
+
 
 
 
@@ -59,6 +359,8 @@
 
 	//var img = document.getElementById('tui-logo');//或者 var img="图片路径"；
 //js亦存在作用域，当你的方法声明在 $(function{}) 之中时，表示该方法只能在该方法内部被使用
+
+/*
 	function exaColor() {
 
 		try{
@@ -71,7 +373,8 @@
   }
 
 	
-			var img="https://www.w3school.com.cn/i/eg_tulip.jpg";
+		//var img="https://www.w3school.com.cn/i/eg_tulip.jpg";
+		var img = "examples/octocat.png";
         RGBaster.colors(img, {
           success: function(payload) {
             //以下三种颜色，都是RGB格式存在
@@ -87,12 +390,32 @@
 		
 }
 
-
-
-
-
-
-			
+	*/		
+	function onMask(isMaskOn){
+		var MaskArray = ["bag","Bigunderpants","bottle","bowtie","camera","fakeskirt","notebook","Ordinaryskirt"]
+		if(isMaskOn){
+		var parent=document.getElementById("img_mask");
+	    var maskimg=document.getElementById("img_current");
+		if(maskimg){ //替换
+			var masknumber = Math.ceil(Math.random()*MaskArray.length);
+			maskimg.src="img/"+MaskArray[masknumber-1]+".png"; //随机mask
+			}
+		else{  //新建
+	   var maskimg=document.createElement("img");
+	   var masknumber = Math.ceil(Math.random()*MaskArray.length)
+	   maskimg.id = "img_current";
+	   maskimg.src="img/"+MaskArray[masknumber-1]+".png"; //随机mask
+	   maskimg.width = window.innerWidth*0.26;
+	   maskimg.height = window.innerWidth*0.26;
+	   parent.appendChild(maskimg);
+	}
+	}
+	else{  //取消
+	   var maskimg=document.createElement("img");
+	   var maskimg=document.getElementById("img_current");
+	   maskimg.src="img/none.png"; //none
+	}
+	}
 
 </script>
 
@@ -106,6 +429,8 @@
 	var color1,color2,color3;
 	var colorAuxiliary =new Array();
     var AuxiliaryNumber;
+
+
 
 	if(random){	
 	//console.log("调用随机模式",random)
@@ -126,8 +451,10 @@
     //console.log("随机颜色",color1,color2,color3)
 
     //随机生成密度上限（针对所有颜色）
-	var number1 = Math.random();              
-	numbercolor1 = Math.ceil(number1 * 6); //控制该参数能够调整生成效果   
+	var number1 = Math.random();      
+	var numbercolorButton = document.getElementById("numbercolor");        
+	numbercolorButton.value = numbercolor1 = Math.ceil(number1 * 6); 
+
 	//console.log("随机密度",numbercolor1)
 
      }else {  
@@ -146,8 +473,22 @@
 	//console.log("密度",document.getElementById("numbercolor").value)
 	}
 
+
+	////动态主色背景样式
+    var body =document.body;
+    body.setAttribute('style', "background-color:"+color1);
+
+	
+
+	//  var svgBorder =document.getElementById("div_svg");
+
+    //  svgBorder.setAttribute('style', "border:2px solid "+color2);
+
+	
+    //body.setAttribute("background-color",color1);
+
     //随机的辅色数量
-    AuxiliaryNumber =  Math.ceil(Math.random()*5);; //辅助色系数量 5以内随机
+    AuxiliaryNumber =  Math.ceil(Math.random()*5); //辅助色系数量 5以内随机
     //console.log("辅助色数量"+AuxiliaryNumber)
     //为了正确显示每次的辅色，清除之前的随机辅助色
   if(document.getElementsByName("colorAdd")){
@@ -167,6 +508,7 @@
         input.type = "color";
         input.id = "colorAdds";//"questions[" + count + "]";
 		input.value=tempColr;
+		input.className="colorbuttonsmall"; //是classname 不是class
         input.name = "colorAdd";//"questions[" + count + "].name";
 		input.disabled="disabled";
         addColor.appendChild(input);       
@@ -175,9 +517,23 @@
 
 //--------------------------------------------------------------开始绘制--------------------------------------------------
 
-//生成SVG
+//生成SVG,保持标题、svg、色盘居中
      var mysvg = document.getElementById("svg_my");
-     var mysvgWidth = 300;
+     var mysvgWidth = window.innerWidth*0.26;//300;
+     mysvg.setAttribute("style","width:"+mysvgWidth+"px;"+"height:"+mysvgWidth+"px;");
+
+	 var colorbutton1Center = document.getElementById("color1");
+	 var colorbutton2Center = document.getElementById("color2");
+	 var colorbutton3Center = document.getElementById("color3");
+	 colorbutton1Center.setAttribute("style","width:"+mysvgWidth*0.3213+"px;");
+	 colorbutton2Center.setAttribute("style","width:"+mysvgWidth*0.3213+"px;");
+	 colorbutton3Center.setAttribute("style","width:"+mysvgWidth*0.3213+"px;");
+
+	 
+	 var title_center = document.getElementById("title_img");
+	 title_center.setAttribute("style","width:"+mysvgWidth+"px;position: absolute;  top: -50px;");
+
+	 
 
 //绘制横纹背景色
 		var rectObj0 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
@@ -539,7 +895,19 @@ img.onload = function() {
 
 //发布 上传后 index页面 设置githubpages https://moonmooncha.github.io/Lattice-Generator/
 
+
+
+
+
+
+
+
+
+
+
 </script>
+
+
 
 </head>
 
