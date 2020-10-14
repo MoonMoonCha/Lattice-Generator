@@ -7,11 +7,18 @@
 <script src="js/canvg.js"></script> 
 <script  src="js/Vibrant.js"></script> 
 <script  src="js/Vibrant.min.js"></script> 
-<script  src="js/rgbaster.min.js"></script> 
+<script type="text/javascript" src="js/rgbaster.js"></script> 
+<link rel="shortcut icon" href="favicon.ico">
 
-<title></title>
-<meta charset="utf-8" />
+<title>随机格柄生成机</title>
 
+<body style="text-align:center;background-color: bisque；padding-top:100px;">
+	<h5>随机格柄</h5>
+	<div id="div_svg">
+	<svg id="svg_my" style="border:1px solid #000;width:300px;height:300px" version="1.1" xmlns='http://www.w3.org/2000/svg'>
+	</svg>
+	</div>
+</body>
 
 <div id="capture" style="padding: 10px; background: #f5da55;">
 	<h4 style="color: #000; ">Hello world!</h4>
@@ -31,54 +38,62 @@
 
 
 
-<script>
+<script type="text/javascript">
 
 	//图片取色器
-	function exaColor(){
-
-		var img = document.createElement('img');
-		img.setAttribute('src', 'http://4.pic.9ht.com/thumb/up/2014-8/201482691356_160_160.jpg')
-		console.log(img)
-
-		//var img = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602623336940&di=6623cbd84a6b3067372ab8f9f53d6eb5&imgtype=0&src=http%3A%2F%2Fawb.img.xmtbang.com%2Fimg%2Fuploadnew%2F201604%2F22%2F1ddd347c168744a5bff0f7e6a845b6fc.jpg'
- 
-		var vibrant = new Vibrant(img, 48, 5), swatches = vibrant.swatches(), i = 0;
+/*	function extractColors(imgEl) {
+		// get current slider image
+		var imgEl=document.createElement("img");
+        imgEl.src="https://www.w3school.com.cn/i/eg_tulip.jpg";
+		console.log(imgEl)
+		var vibrant = new Vibrant(imgEl, 48, 5), swatches = vibrant.swatches(), i = 0;
 		for (var swatch in swatches) {
-			var palette = paletteBoxes[i];
-			if (swatches.hasOwnProperty(swatch) && swatches[swatch] && palette) {
-				//palette.style.color = swatches[swatch].getHex();
-				console.log(swatches[swatch].getHex());
-				//palette.querySelector('.palette__value--real').innerHTML = swatches[swatch].getHex();
-				
-				//addToPalette(palette, i);
+			if (swatches.hasOwnProperty(swatch) && swatches[swatch] ) {
+				console.log(swatches[swatch].getHex())
+				palette.style.color = swatches[swatch].getHex();
 			}
 			++i;
 		}
-    /*
-     * Results into:
-     * Vibrant #7a4426
-     * Muted #7b9eae
-     * DarkVibrant #348945
-     * DarkMuted #141414
-     * LightVibrant #f3ccb4
-     */
-	
-// 	// var img = document.getElementById('image');
-// // 或者
-// var img = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602623336940&di=6623cbd84a6b3067372ab8f9f53d6eb5&imgtype=0&src=http%3A%2F%2Fawb.img.xmtbang.com%2Fimg%2Fuploadnew%2F201604%2F22%2F1ddd347c168744a5bff0f7e6a845b6fc.jpg'
- 
-// RGBaster.colors(img, {
-//   success: function(payload) {
-//     // payload.dominant是主色，RGB形式表示
-//     // payload.secondary是次色，RGB形式表示
-//     // payload.palette是调色板，含多个主要颜色，数组
-//     console.log(payload.dominant);
-//     console.log(payload.secondary);
-//     console.log(payload.palette);
-//   }
-// });
-    
 	}
+	*/
+
+	//var img = document.getElementById('tui-logo');//或者 var img="图片路径"；
+//js亦存在作用域，当你的方法声明在 $(function{}) 之中时，表示该方法只能在该方法内部被使用
+	function exaColor() {
+
+		try{
+   if(RGBaster && typeof(RGBaster) == "function"){
+	   console.log("存在")
+    //test();
+   }
+  }catch(e){
+   alert("方法不存在");
+  }
+
+	
+			var img="https://www.w3school.com.cn/i/eg_tulip.jpg";
+        RGBaster.colors(img, {
+          success: function(payload) {
+            //以下三种颜色，都是RGB格式存在
+            // payload.dominant 主色
+            console.log(payload.dominant);
+            // payload.secondary 次色
+            console.log(payload.secondary);
+            // payload.palette 调色板
+            console.log(payload.palette);
+		  }
+		});
+
+		
+}
+
+
+
+
+
+
+			
+
 </script>
 
 
@@ -508,23 +523,8 @@ img.onload = function() {
 	window.onload = onLoad;
 </script>
 
-
-
-</head>
-
-<body style="text-align:center;background-color: bisque；padding-top:100px;">
-
-
-<h5>随机格柄</h5>
-<div id="div1" >
-<div id="div_svg">
-<svg id="svg_my" style="border:1px solid #000;width:300px;height:300px" version="1.1" xmlns='http://www.w3.org/2000/svg'>
-</svg>
-</div>
-
-<!-- <canvas id="canvas" width="1000px" height="600px"></canvas>  -->
-
 <script>
+	//body放前面
 //svg转png  canvg html2canvas
 // html2canvas(document.querySelector("#div1")).then(canvas => 
 // {document.body.appendChild(canvas)});   
@@ -541,9 +541,9 @@ img.onload = function() {
 
 </script>
 
-</div>
+</head>
 
-</body>
+
 
 </html>
 
