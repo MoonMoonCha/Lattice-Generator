@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name=viewportcontent=width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no /> 
 <script src="js/html2canvas.min.js"></script>
 <script src="js/rgbcolor.js"></script> 
 <script src="js/canvg.js"></script> 
@@ -51,7 +52,8 @@
 	.white{
 		/* flex: 1; */
 	   width: 100%;
-       height: 500px;
+       height: 100%;
+	   /* 500px; */
        margin: 0 auto;
 	   position: absolute;
 	   background-color: #fffffa;
@@ -405,8 +407,13 @@ display: inline-block;
 	   var masknumber = Math.ceil(Math.random()*MaskArray.length)
 	   maskimg.id = "img_current";
 	   maskimg.src="img/"+MaskArray[masknumber-1]+".png"; //随机mask
-	   maskimg.width = window.innerWidth*0.26;
+	   if(window.innerWidth<window.innerHeight){
+	   maskimg.width = window.innerHeight*0.26;
+	   maskimg.height = window.innerHeight*0.26;
+	   }else{
+		maskimg.width = window.innerWidth*0.26;
 	   maskimg.height = window.innerWidth*0.26;
+	   }
 	   parent.appendChild(maskimg);
 	}
 	}
@@ -519,7 +526,19 @@ display: inline-block;
 
 //生成SVG,保持标题、svg、色盘居中
      var mysvg = document.getElementById("svg_my");
-     var mysvgWidth = window.innerWidth*0.26;//300;
+//适应手机
+
+console.log(window.innerWidth,window.innerHeight)
+if(window.innerWidth<window.innerHeight){
+	var mysvgWidth = window.innerHeight*0.26;//300;
+
+}else{
+
+	var mysvgWidth = window.innerWidth*0.26;//300;
+}
+
+
+     
      mysvg.setAttribute("style","width:"+mysvgWidth+"px;"+"height:"+mysvgWidth+"px;");
 
 	 var colorbutton1Center = document.getElementById("color1");
@@ -532,6 +551,8 @@ display: inline-block;
 	 
 	 var title_center = document.getElementById("title_img");
 	 title_center.setAttribute("style","width:"+mysvgWidth+"px;position: absolute;  top: -50px;");
+
+
 
 	 
 
