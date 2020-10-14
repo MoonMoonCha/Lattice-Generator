@@ -42,14 +42,18 @@
 
 		//var img = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602623336940&di=6623cbd84a6b3067372ab8f9f53d6eb5&imgtype=0&src=http%3A%2F%2Fawb.img.xmtbang.com%2Fimg%2Fuploadnew%2F201604%2F22%2F1ddd347c168744a5bff0f7e6a845b6fc.jpg'
  
-
-        img.addEventListener('load', function() {
-        var vibrant = new Vibrant(img);
-        var swatches = vibrant.swatches()
-        for (var swatch in swatches)
-        if (swatches.hasOwnProperty(swatch) && swatches[swatch])
-            console.log(swatch, swatches[swatch].getHex())
-		});
+		var vibrant = new Vibrant(img, 48, 5), swatches = vibrant.swatches(), i = 0;
+		for (var swatch in swatches) {
+			var palette = paletteBoxes[i];
+			if (swatches.hasOwnProperty(swatch) && swatches[swatch] && palette) {
+				//palette.style.color = swatches[swatch].getHex();
+				console.log(swatches[swatch].getHex());
+				//palette.querySelector('.palette__value--real').innerHTML = swatches[swatch].getHex();
+				
+				//addToPalette(palette, i);
+			}
+			++i;
+		}
     /*
      * Results into:
      * Vibrant #7a4426
