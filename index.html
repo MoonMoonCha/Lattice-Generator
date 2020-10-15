@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name=viewportcontent=width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no /> 
+<meta name=”viewport” content=”width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no”/>
+
 <script src="js/html2canvas.min.js"></script>
 <script src="js/rgbcolor.js"></script> 
 <script src="js/canvg.js"></script> 
@@ -29,26 +30,6 @@
 		margin-left:10%;
 	}
 	
-
-	.lattice{
-	/* flex: 1; */
-	z-index: 3;
-	/* width:100%; */
-	/* height:65%; */
-	margin-top:6%;
-	margin-left:33%;
-	position: absolute;
-	/* background: blue; */
-	}
-
-	.maskimg{
-	z-index: 4;
-	margin-top:6%;
-	margin-left:33%;
-	position: absolute;
-	/* background: red; */
-	}
-
 	.white{
 		/* flex: 1; */
 	   width: 100%;
@@ -61,8 +42,33 @@
 
 	}
 
+	.lattice{
+	/* flex: 1; */
+	z-index: 3;
+	/* width:100%; */
+	height:100%;
+	/* margin-top:6%; */
+	margin-left:33%;
+	position: absolute;
+	/* background: blue; */
+	}
+	#svg_my{
+	z-index: 3;
+	position: absolute;
+	}
+
+	.maskimg{
+	z-index: 4;
+	position: absolute;
+	}
+
+
+
+
 	.capture{
-		position: relative;
+		bottom: 0;
+		/* width: 100%; */
+		position: absolute;
 
 	}
 
@@ -73,7 +79,7 @@
 
 	.colorbutton{
     width: 32.2%;
-    height: 20px;
+    height: 40px;
 	border: 0;
 }
 
@@ -106,7 +112,7 @@
 
 .GeButton{
 	cursor:pointer;
-    position: absolute;
+    /* position: absolute; */
     font-size: 0;
     width: 40px;
     height: 40px;
@@ -124,15 +130,15 @@
 }
 #GeButton1{
     text-align: left;
-    margin-left:1%;
-	margin-top: 20%;
+    /* margin-left:1%; */
+	margin-top: 2%;
 }
 
 
 #GeButton2{
     text-align: right;
-    margin-left: 55%;
-	margin-top: 20%;
+    /* margin-left: 55%; */
+	margin-top: 2%;
 }
 .GeButton:after {
 display: inline-block;
@@ -245,7 +251,7 @@ display: inline-block;
 
 <title>随机格柄生成机</title>
 
-<body  style="text-align:center;background-color: #fffffa;width: 100%;height:100%">
+<body  style="text-align:center;width: 100%;height:100%">
 	
 
 		<!-- <div class="parent">
@@ -258,7 +264,7 @@ display: inline-block;
    <div class = "parent" >
 	
 			
-	<div class = "white" id="white"  style="background-color: #fffffa">
+	<div class = "white" id="white" >
 
 		<a  href = "http://www.matools.com/image-color/?embed" target="_blank" >
 		<button  class = "uplobutton" 
@@ -282,13 +288,7 @@ display: inline-block;
 		<button class = "maskbutton" id="maskbutton2" onclick="onMask(0)" >No Mask</button>
 		</div>
 
-		<input class ="GeButton" type="button"  id="GeButton1"
-		title="随机生成颜色、密度、条纹位置"
-		value="全随机生成"  onclick="onLoad(1)" />
-	   <input class ="GeButton" type="button"  id="GeButton2"
-		title="您可以在上方自定义三个主色以及条纹密度，随机生成辅色和条纹位置"
-		value="半随机生成"  onclick="onLoad(0)" />
-
+	
 
 	</div>
 
@@ -297,12 +297,11 @@ display: inline-block;
 
 	<div class="lattice" id="div_svg"  >
 
-	<img src="img/latt.png"  id="title_img" alt="title"  style="position: absolute;  top: -50px;width: 100%;"/>
-	<svg id="svg_my" style="width:100%;height:300px" version="1.1" xmlns='http://www.w3.org/2000/svg'>
+	<img src="img/latt.png"  id="title_img" alt="title"  style="position: absolute;  width: 100%;"/>
+	<svg id="svg_my"  version="1.1" xmlns='http://www.w3.org/2000/svg'>
 	</svg>
 
-	
-
+	<div class="maskimg" id="img_mask" ></div>
 	<div class = "capture" id="capture" >
 		<!-- <h4 style="color: #000; ">Hello world!</h4> -->
 
@@ -314,16 +313,23 @@ display: inline-block;
 		 </form>
 		
 
+		 <input class ="GeButton" type="button"  id="GeButton1"
+		 title="随机生成颜色、密度、条纹位置"
+		 value="全随机生成"  onclick="onLoad(1)" />
 
 		 <input type="number" id="numbercolor" title="格纹密度上限" value="3"/>
 
-		
+
+		<input class ="GeButton" type="button"  id="GeButton2"
+		 title="您可以在上方自定义三个主色以及条纹密度，随机生成辅色和条纹位置"
+		 value="半随机生成"  onclick="onLoad(0)" />
+	</div>
+
+
 
 	</div>
 
-	</div>
 
-	<div class="maskimg" id="img_mask"  ></div>
 
 	</div>
 
@@ -408,11 +414,11 @@ display: inline-block;
 	   maskimg.id = "img_current";
 	   maskimg.src="img/"+MaskArray[masknumber-1]+".png"; //随机mask
 	   if(window.innerWidth<window.innerHeight){
-	   maskimg.width = window.innerHeight*0.26;
-	   maskimg.height = window.innerHeight*0.26;
+	   maskimg.width = window.innerHeight*0.26+1;  //比svg稍微大一些
+	   maskimg.height = window.innerHeight*0.26+1;
 	   }else{
-		maskimg.width = window.innerWidth*0.26;
-	   maskimg.height = window.innerWidth*0.26;
+		maskimg.width = window.innerWidth*0.26+1;
+	   maskimg.height = window.innerWidth*0.26+1;
 	   }
 	   parent.appendChild(maskimg);
 	}
@@ -526,9 +532,10 @@ display: inline-block;
 
 //生成SVG,保持标题、svg、色盘居中
      var mysvg = document.getElementById("svg_my");
+	 var mymask = document.getElementById("img_mask");
 //适应手机
 
-console.log(window.innerWidth,window.innerHeight)
+console.log(window.innerWidth,window.innerHeight,document.body.clientWidth,window.screen.width)
 if(window.innerWidth<window.innerHeight){
 	var mysvgWidth = window.innerHeight*0.26;//300;
 
@@ -536,21 +543,25 @@ if(window.innerWidth<window.innerHeight){
 
 	var mysvgWidth = window.innerWidth*0.26;//300;
 }
+   mysvg.setAttribute("style","width:"+mysvgWidth+"px;"+"height:"+mysvgWidth+"px;margin-top:"+window.innerHeight*0.1+"px;");//相对于当前窗口高度下移
+   mymask.setAttribute("style","margin-top:"+window.innerHeight*0.1+"px;");//相对于当前窗口高度下移
+  
+	 var colorbuttonCenter = document.getElementById("capture");
+	 colorbuttonCenter.setAttribute("style","width:"+mysvgWidth+"px;");
+
+	 var latticeLeft = document.getElementById("div_svg");
+    if(window.innerWidth<window.innerHeight){
+	latticeLeft.setAttribute("style","margin-left:"+window.screen.width*0.47+"px;");  //手机
+    }else{
+	latticeLeft.setAttribute("style","margin-left:"+window.screen.width*0.26+"px;");  //pc
+}
 
 
-     
-     mysvg.setAttribute("style","width:"+mysvgWidth+"px;"+"height:"+mysvgWidth+"px;");
 
-	 var colorbutton1Center = document.getElementById("color1");
-	 var colorbutton2Center = document.getElementById("color2");
-	 var colorbutton3Center = document.getElementById("color3");
-	 colorbutton1Center.setAttribute("style","width:"+mysvgWidth*0.3213+"px;");
-	 colorbutton2Center.setAttribute("style","width:"+mysvgWidth*0.3213+"px;");
-	 colorbutton3Center.setAttribute("style","width:"+mysvgWidth*0.3213+"px;");
 
 	 
 	 var title_center = document.getElementById("title_img");
-	 title_center.setAttribute("style","width:"+mysvgWidth+"px;position: absolute;  top: -50px;");
+	 title_center.setAttribute("style","width:"+mysvgWidth+"px;position: absolute;margin-top:15px;");
 
 
 
