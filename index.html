@@ -3,7 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name=”viewport” content=”width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no”/>
-
 <script src="js/html2canvas.min.js"></script>
 <script src="js/rgbcolor.js"></script> 
 <script src="js/canvg.js"></script> 
@@ -52,6 +51,18 @@
 	position: absolute;
 	/* background: blue; */
 	}
+
+	#title_Div{
+		position: relative;
+		/* height:10%; */
+	}
+
+
+	#svg_img{
+		position: relative;
+		height:78%;
+
+	}
 	#svg_my{
 	z-index: 3;
 	position: absolute;
@@ -66,9 +77,9 @@
 
 
 	.capture{
-		bottom: 0;
+		/* bottom: 0; */
 		/* width: 100%; */
-		position: absolute;
+		position: relative;
 
 	}
 
@@ -80,7 +91,13 @@
 	.colorbutton{
     width: 32.2%;
     height: 40px;
-	border: 0;
+	border: none;
+	color: black;
+	background-color: transparent;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+	border-radius: 5px;
 }
 
 .colorbuttonsmall{
@@ -89,16 +106,32 @@
 	border: 0;
 }
 #numbercolor{
-	width: 30px;
-    height: 20px;
+	width: 12%;
+    height: 39px;
+    border: 1px solid rgba(0,0,0,2);
+    padding-left: 1em;
+    margin-bottom: 1.2em;
+    -webkit-transition: all .13s ease-out;
+       -moz-transition: all .13s ease-out;
+         -o-transition: all .13s ease-out;
+            transition: all .13s ease-out;  
+    color: black;
+    font-family:Arial;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    cursor: pointer;
+	font-family: "STXihei";
+	border-radius: 5px;
 
 }
 
-.GeButton1{
+/* .GeButton1{
     border: none;
     color: black;
     font-family:Arial;
-    padding: 10px 24px;
+    padding: 10px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -106,39 +139,49 @@
     margin: 4px 2px;
     cursor: pointer;
 	font-family: "STXihei";
-	/* https://www.jb51.net/css/67658.html */
+	
 
-}
+} */
 
-.GeButton{
-	cursor:pointer;
-    /* position: absolute; */
-    font-size: 0;
-    width: 40px;
+
+.GeButton{   
     height: 40px;
-    border-radius: 50%;
-    border:none;
-    box-shadow: 0 2px 5px rgba(0,0,0,.4);
-    background: -webkit-linear-gradient(top,#fff,#d5dbe1);
-    background: -moz-linear-gradient(top,#fff,#d5dbe1);
-    background: -ms-linear-gradient(top,#fff,#d5dbe1);
-    background: -o-linear-gradient(top,#fff,#d5dbe1);
     -webkit-transition: all .13s ease-out;
        -moz-transition: all .13s ease-out;
          -o-transition: all .13s ease-out;
-            transition: all .13s ease-out;
+            transition: all .13s ease-out;  
+	/* border: none; */
+	border: 1px solid rgba(0,0,0,2);
+	background-color: transparent;
+    color: black;
+    font-family:Arial;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 10px 0px;
+    cursor: pointer;
+	font-family: "STXihei";
+	border-radius: 5px;
+
+
+
 }
+
 #GeButton1{
-    text-align: left;
+    text-align: center;
     /* margin-left:1%; */
 	margin-top: 2%;
+	width:46%;
 }
 
 
 #GeButton2{
-    text-align: right;
+    text-align: center;
     /* margin-left: 55%; */
 	margin-top: 2%;
+	width:35%;
 }
 .GeButton:after {
 display: inline-block;
@@ -163,14 +206,14 @@ display: inline-block;
     content: "\25";
 }
 .GeButton:hover:after {
-    color: #19a6e4;
+    color: black;
     box-shadow: 0 1px 3px #d7d8d9 inset;
     background: -webkit-radial-gradient(#dbeef8 ,#f2f4f6 50%);
 }
 .GeButton:hover {
     color: black;
     box-shadow: 0 1px 3px #d7d8d9 inset;
-    background: -webkit-radial-gradient(#dbeef8 ,#f2f4f6 50%);
+    background: -webkit-radial-gradient(#dfecde ,#f1f1f1 50%);
 }
 
 .GeButton:active {
@@ -198,6 +241,12 @@ display: inline-block;
     cursor: pointer;
 	font-family: "STXihei";
 	border-radius: 5px;
+}
+
+.maskbutton:hover {
+    color: black;
+    box-shadow: 0 1px 3px #d7d8d9 inset;
+    background: -webkit-radial-gradient(#dfecde ,#f1f1f1 50%);
 }
 
 #maskbutton1{
@@ -238,7 +287,7 @@ display: inline-block;
     position: relative;
     text-decoration: none;
     /* display: inline-block; */
-    font-size: 10px;
+    font-size: 15px;
     text-align: left;
     cursor: pointer;
 	font-family: "STXihei";
@@ -279,13 +328,15 @@ display: inline-block;
 			   Q:为什么有的图有bug？&#13;A:因为开发者累了。&#13;
 			   Q:你还有什么问题？&#13;A:你没有了。&#13;
 		" 
-		>Q&A?</button>
+		>Q&A</button>
 
 		<div class = "maskbutton_DIV">
+		<img src="img/maskico.ico"  id="mask_ico"   style="position: absolute;  width: 20px;margin-top: 20px;margin-left: 10px;"/>
 		<button class = "maskbutton" id="maskbutton1" 
 		title="每次点击，都能随机生成一个遮罩，如果您感觉卡住了，那只是随机到了同一个遮罩哦~"
-		onclick="onMask(1)"  >Mask</button>
-		<button class = "maskbutton" id="maskbutton2" onclick="onMask(0)" >No Mask</button>
+		onclick="onMask(1)">&nbsp&nbsp&nbspMask</button>
+		<img src="img/delmaskico.ico"  id="mask_ico"   style="position: absolute;  width: 20px;margin-top: 19px;margin-left: 7px;"/>
+		<button class = "maskbutton" id="maskbutton2" onclick="onMask(0)" >&nbsp&nbsp&nbspNo Mask</button>
 		</div>
 
 	
@@ -297,11 +348,18 @@ display: inline-block;
 
 	<div class="lattice" id="div_svg"  >
 
-	<img src="img/latt.png"  id="title_img" alt="title"  style="position: absolute;  width: 100%;"/>
-	<svg id="svg_my"  version="1.1" xmlns='http://www.w3.org/2000/svg'>
-	</svg>
+		<div id ="title_Div">
+	<img src="img/latt.png"  id="title_img" alt="title"  style="position: relative;  width: 100%;"/>
+</div>
 
-	<div class="maskimg" id="img_mask" ></div>
+	<div id = "svg_img">
+	   <svg id="svg_my"  version="1.1" xmlns='http://www.w3.org/2000/svg'>
+	   </svg>
+
+	   <div class="maskimg" id="img_mask" ></div>
+
+    </div>
+
 	<div class = "capture" id="capture" >
 		<!-- <h4 style="color: #000; ">Hello world!</h4> -->
 
@@ -315,14 +373,15 @@ display: inline-block;
 
 		 <input class ="GeButton" type="button"  id="GeButton1"
 		 title="随机生成颜色、密度、条纹位置"
-		 value="全随机生成"  onclick="onLoad(1)" />
+		 value="Full-Auto（全随机）"  onclick="onLoad(1)">
+		</input>
 
 		 <input type="number" id="numbercolor" title="格纹密度上限" value="3"/>
 
 
 		<input class ="GeButton" type="button"  id="GeButton2"
 		 title="您可以在上方自定义三个主色以及条纹密度，随机生成辅色和条纹位置"
-		 value="半随机生成"  onclick="onLoad(0)" />
+		 value="Semi-Auto(半随机)"  onclick="onLoad(0)" />
 	</div>
 
 
@@ -535,7 +594,7 @@ display: inline-block;
 	 var mymask = document.getElementById("img_mask");
 //适应手机
 
-console.log(window.innerWidth,window.innerHeight,document.body.clientWidth,window.screen.width)
+//console.log(window.innerWidth,window.innerHeight,document.body.clientWidth,window.screen.width)
 if(window.innerWidth<window.innerHeight){
 	var mysvgWidth = window.innerHeight*0.26;//300;
 
@@ -551,7 +610,7 @@ if(window.innerWidth<window.innerHeight){
 
 	 var latticeLeft = document.getElementById("div_svg");
     if(window.innerWidth<window.innerHeight){
-	latticeLeft.setAttribute("style","margin-left:"+window.screen.width*0.47+"px;");  //手机
+	latticeLeft.setAttribute("style","margin-left:"+window.screen.width*0.45+"px;");  //手机
     }else{
 	latticeLeft.setAttribute("style","margin-left:"+window.screen.width*0.26+"px;");  //pc
 }
