@@ -1,0 +1,279 @@
+	*{
+	margin: 0;
+	padding: 0;
+	}
+	.parent{
+		position: absolute; 
+		width:80%;
+		height:80%;
+		margin: 0 auto;
+		margin-top:5%;
+		margin-left:10%;
+	}
+	
+	.white{
+		/* flex: 1; */
+	   width: 100%;
+       height: 100%;
+	   /* 500px; */
+       margin: 0 auto;
+	   position: absolute;
+	   background-color: #fffffa;
+	   border-radius:10px;
+
+	}
+
+	.lattice{
+	/* flex: 1; */
+	z-index: 3;
+	/* width:100%; */
+	height:100%;
+	/* margin-top:6%; */
+	margin-left:33%;
+	position: absolute;
+	/* background: blue; */
+	}
+
+	#title_Div{
+		position: relative;
+		/* height:10%; */
+	}
+
+
+	#svg_img{
+		position: relative;
+		height:78%;
+
+	}
+	#svg_my{
+	z-index: 3;
+	position: absolute;
+	}
+
+	.maskimg{
+	z-index: 4;
+	position: absolute;
+	}
+
+
+
+
+	.capture{
+		/* bottom: 0; */
+		/* width: 100%; */
+		position: relative;
+
+	}
+
+	#colorCnotroll{
+		margin-left: 20%;
+
+	}
+
+	.colorbutton{
+    width: 32.2%;
+    height: 40px;
+	border: none;
+	color: black;
+	background-color: transparent;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+	border-radius: 5px;
+}
+
+.colorbuttonsmall{
+    width: 10%;
+    height: 15px;
+	border: 0;
+}
+#numbercolor{
+	width: 12%;
+    height: 39px;
+    border: 1px solid rgba(0,0,0,2);
+    padding-left: 1em;
+    margin-bottom: 1.2em;
+    -webkit-transition: all .13s ease-out;
+       -moz-transition: all .13s ease-out;
+         -o-transition: all .13s ease-out;
+            transition: all .13s ease-out;  
+    color: black;
+    font-family:Arial;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    cursor: pointer;
+	font-family: "STXihei";
+	border-radius: 5px;
+
+}
+
+/* .GeButton1{
+    border: none;
+    color: black;
+    font-family:Arial;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px 2px;
+    cursor: pointer;
+	font-family: "STXihei";
+	
+
+} */
+
+
+.GeButton{   
+    height: 40px;
+    -webkit-transition: all .13s ease-out;
+       -moz-transition: all .13s ease-out;
+         -o-transition: all .13s ease-out;
+            transition: all .13s ease-out;  
+	/* border: none; */
+	border: 1px solid rgba(0,0,0,2);
+	background-color: transparent;
+    color: black;
+    font-family:Arial;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 10px 0px;
+    cursor: pointer;
+	font-family: "STXihei";
+	border-radius: 5px;
+
+
+
+}
+
+#GeButton1{
+    text-align: center;
+    /* margin-left:1%; */
+	margin-top: 2%;
+	width:46%;
+}
+
+
+#GeButton2{
+    text-align: center;
+    /* margin-left: 55%; */
+	margin-top: 2%;
+	width:35%;
+}
+.GeButton:after {
+display: inline-block;
+    font-family: 'icomoon';
+    font-size: 24px;
+    color: #bdc0c1;
+    content: attr(data-icon);
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    width: 64px;
+    line-height: 64px;
+    margin: 10px;
+    border-radius: 32px;
+    border: 1px solid #efefef;
+    box-shadow: -1px 0 0 #dbdcdd,1px 0 0 #dbdcdd,0 1px 0 #d0d1d2,0 0 8px #fff;
+    background: -webkit-linear-gradient(top left,#fcfcfc 50%,#dfe4e8);
+}
+.GeButton:first-child:after {
+    content: "\21";
+}
+.GeButton:last-child:after {
+    content: "\25";
+}
+.GeButton:hover:after {
+    color: black;
+    box-shadow: 0 1px 3px #d7d8d9 inset;
+    background: -webkit-radial-gradient(#dbeef8 ,#f2f4f6 50%);
+}
+.GeButton:hover {
+    color: black;
+    box-shadow: 0 1px 3px #d7d8d9 inset;
+    background: -webkit-radial-gradient(#dfecde ,#f1f1f1 50%);
+}
+
+.GeButton:active {
+    top: 3px;
+    box-shadow: 0 1px 3px #d7d8d9 inset;
+}
+
+
+
+.maskbutton_DIV{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+.maskbutton{
+    border: none;
+    color: black;
+    font-family:Arial;
+    padding: 10px 10px;
+    text-align: right;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 10px 10px;
+    cursor: pointer;
+	font-family: "STXihei";
+	border-radius: 5px;
+}
+
+.maskbutton:hover {
+    color: black;
+    box-shadow: 0 1px 3px #d7d8d9 inset;
+    background: -webkit-radial-gradient(#dfecde ,#f1f1f1 50%);
+}
+
+#maskbutton1{
+	margin-right: 0px;
+
+}
+#maskbutton2{
+	margin-left: 5px;
+
+}
+
+.probutton{
+    border: none;
+    color: black;
+	background-color:transparent;
+    font-family:Arial;
+    padding: 10px 24px;
+    position: absolute;
+	right:0;
+    text-decoration: none;
+    /* display: inline-block; */
+    font-size: 15px;
+    text-align: right;
+    cursor: pointer;
+	font-family: "STXihei";
+	/* https://www.jb51.net/css/67658.html */
+
+}
+
+
+.uplobutton
+{
+    border: none;
+    color: black;
+    font-family:Arial;
+    padding: 10px 24px;
+	background-color:transparent;
+    position: relative;
+    text-decoration: none;
+    /* display: inline-block; */
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+	font-family: "STXihei";
+	/* https://www.jb51.net/css/67658.html */
+
+}
+
