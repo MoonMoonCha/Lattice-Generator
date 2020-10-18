@@ -10,295 +10,10 @@
 <script  src="js/Vibrant.min.js"></script> 
 <script type="text/javascript" src="js/rgbaster.js"></script>  -->
 <link rel="shortcut icon" href="favicon.ico">
+<link rel="stylesheet" type="text/css" href="css/style.css">
 
 
-<style type="text/css">
-
-
-
-	*{
-	margin: 0;
-	padding: 0;
-	}
-	.parent{
-		position: absolute; 
-		width:80%;
-		height:80%;
-		margin: 0 auto;
-		margin-top:5%;
-		margin-left:10%;
-	}
-	
-	.white{
-		/* flex: 1; */
-	   width: 100%;
-       height: 100%;
-	   /* 500px; */
-       margin: 0 auto;
-	   position: absolute;
-	   background-color: #fffffa;
-	   border-radius:10px;
-
-	}
-
-	.lattice{
-	/* flex: 1; */
-	z-index: 3;
-	/* width:100%; */
-	height:100%;
-	/* margin-top:6%; */
-	margin-left:33%;
-	position: absolute;
-	/* background: blue; */
-	}
-
-	#title_Div{
-		position: relative;
-		/* height:10%; */
-	}
-
-
-	#svg_img{
-		position: relative;
-		height:78%;
-
-	}
-	#svg_my{
-	z-index: 3;
-	position: absolute;
-	}
-
-	.maskimg{
-	z-index: 4;
-	position: absolute;
-	}
-
-
-
-
-	.capture{
-		/* bottom: 0; */
-		/* width: 100%; */
-		position: relative;
-
-	}
-
-	#colorCnotroll{
-		margin-left: 20%;
-
-	}
-
-	.colorbutton{
-    width: 32.2%;
-    height: 40px;
-	border: none;
-	color: black;
-	background-color: transparent;
-    text-align: center;
-    display: inline-block;
-    cursor: pointer;
-	border-radius: 5px;
-}
-
-.colorbuttonsmall{
-    width: 10%;
-    height: 15px;
-	border: 0;
-}
-#numbercolor{
-	width: 12%;
-    height: 39px;
-    border: 1px solid rgba(0,0,0,2);
-    padding-left: 1em;
-    margin-bottom: 1.2em;
-    -webkit-transition: all .13s ease-out;
-       -moz-transition: all .13s ease-out;
-         -o-transition: all .13s ease-out;
-            transition: all .13s ease-out;  
-    color: black;
-    font-family:Arial;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 10px;
-    cursor: pointer;
-	font-family: "STXihei";
-	border-radius: 5px;
-
-}
-
-/* .GeButton1{
-    border: none;
-    color: black;
-    font-family:Arial;
-    padding: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px 2px;
-    cursor: pointer;
-	font-family: "STXihei";
-	
-
-} */
-
-
-.GeButton{   
-    height: 40px;
-    -webkit-transition: all .13s ease-out;
-       -moz-transition: all .13s ease-out;
-         -o-transition: all .13s ease-out;
-            transition: all .13s ease-out;  
-	/* border: none; */
-	border: 1px solid rgba(0,0,0,2);
-	background-color: transparent;
-    color: black;
-    font-family:Arial;
-    padding: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 10px;
-    margin: 10px 0px;
-    cursor: pointer;
-	font-family: "STXihei";
-	border-radius: 5px;
-
-
-
-}
-
-#GeButton1{
-    text-align: center;
-    /* margin-left:1%; */
-	margin-top: 2%;
-	width:46%;
-}
-
-
-#GeButton2{
-    text-align: center;
-    /* margin-left: 55%; */
-	margin-top: 2%;
-	width:35%;
-}
-.GeButton:after {
-display: inline-block;
-    font-family: 'icomoon';
-    font-size: 24px;
-    color: #bdc0c1;
-    content: attr(data-icon);
-    font-weight: normal;
-    -webkit-font-smoothing: antialiased;
-    width: 64px;
-    line-height: 64px;
-    margin: 10px;
-    border-radius: 32px;
-    border: 1px solid #efefef;
-    box-shadow: -1px 0 0 #dbdcdd,1px 0 0 #dbdcdd,0 1px 0 #d0d1d2,0 0 8px #fff;
-    background: -webkit-linear-gradient(top left,#fcfcfc 50%,#dfe4e8);
-}
-.GeButton:first-child:after {
-    content: "\21";
-}
-.GeButton:last-child:after {
-    content: "\25";
-}
-.GeButton:hover:after {
-    color: black;
-    box-shadow: 0 1px 3px #d7d8d9 inset;
-    background: -webkit-radial-gradient(#dbeef8 ,#f2f4f6 50%);
-}
-.GeButton:hover {
-    color: black;
-    box-shadow: 0 1px 3px #d7d8d9 inset;
-    background: -webkit-radial-gradient(#dfecde ,#f1f1f1 50%);
-}
-
-.GeButton:active {
-    top: 3px;
-    box-shadow: 0 1px 3px #d7d8d9 inset;
-}
-
-
-
-.maskbutton_DIV{
-	position: absolute;
-	bottom: 0;
-	right: 0;
-}
-.maskbutton{
-    border: none;
-    color: black;
-    font-family:Arial;
-    padding: 10px 10px;
-    text-align: right;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 13px;
-    margin: 10px 10px;
-    cursor: pointer;
-	font-family: "STXihei";
-	border-radius: 5px;
-}
-
-.maskbutton:hover {
-    color: black;
-    box-shadow: 0 1px 3px #d7d8d9 inset;
-    background: -webkit-radial-gradient(#dfecde ,#f1f1f1 50%);
-}
-
-#maskbutton1{
-	margin-right: 0px;
-
-}
-#maskbutton2{
-	margin-left: 5px;
-
-}
-
-.probutton{
-    border: none;
-    color: black;
-	background-color:transparent;
-    font-family:Arial;
-    padding: 10px 24px;
-    position: absolute;
-	right:0;
-    text-decoration: none;
-    /* display: inline-block; */
-    font-size: 15px;
-    text-align: right;
-    cursor: pointer;
-	font-family: "STXihei";
-	/* https://www.jb51.net/css/67658.html */
-
-}
-
-
-.uplobutton
-{
-    border: none;
-    color: black;
-    font-family:Arial;
-    padding: 10px 24px;
-	background-color:transparent;
-    position: relative;
-    text-decoration: none;
-    /* display: inline-block; */
-    font-size: 15px;
-    text-align: left;
-    cursor: pointer;
-	font-family: "STXihei";
-	/* https://www.jb51.net/css/67658.html */
-
-}
-
-	
-	</style>
-
-<title>随机格柄生成机</title>
+<title>格纹宝</title>
 
 <body  style="text-align:center;width: 100%;height:100%">
 	
@@ -326,8 +41,8 @@ display: inline-block;
 			   Q:成图可以商用吗？&#13;A:我认为店主不会要。&#13;
 			   Q:这个工具怎么使用？&#13;A:点击页面下方'月亮猹'观看教程视频。&#13;
 			   Q:为什么有的图有bug？&#13;A:因为开发者累了。&#13;
-			   Q:你还有什么问题？&#13;A:你没有了。&#13;
-		" 
+			   Q:你还有什么问题？&#13;A:你没有了。&#13;" 
+			   onclick="alertTitle()"
 		>Q&A</button>
 
 		<div class = "maskbutton_DIV">
@@ -337,6 +52,12 @@ display: inline-block;
 		onclick="onMask(1)">&nbsp&nbsp&nbspMask</button>
 		<img src="img/delmaskico.ico"  id="mask_ico"   style="position: absolute;  width: 20px;margin-top: 19px;margin-left: 7px;"/>
 		<button class = "maskbutton" id="maskbutton2" onclick="onMask(0)" >&nbsp&nbsp&nbspNo Mask</button>
+		</div>
+
+		<div id= "name_DIV">
+		<button id="namebutton" onclick="onName(0)" >随机取名</button>
+        <span id="namebutton_span" value="name">   </span>
+
 		</div>
 
 	
@@ -487,6 +208,33 @@ display: inline-block;
 	   var maskimg=document.getElementById("img_current");
 	   maskimg.src="img/none.png"; //none
 	}
+	}
+
+
+	function alertTitle(){
+		alert(
+			"Q:图片可以下载吗？A:由于开发时间有限，您只能截图（无限高清放大）而不是直接下载图片。\nQ:如何制作格裙样机？A:搜索JK样机教程。\nQ:如何制作格裙？A:找别人帮你做。\nQ:成图可以商用吗？A:我认为店主不会要。\nQ:这个工具怎么使用？A:点击页面下方'月亮猹'观看教程视频。\nQ:为什么有的图有bug？A:因为开发者累了。\nQ:你还有什么问题？A:你没有了。" 	
+		);
+	}
+
+	function onName(){
+
+	//语料来自猹的往期分析
+		var name = [
+    "榴莲","芝士","软糖","浪漫","奶糖","蓝桥","情书","海岸","玻璃","薄荷",
+    "星象","约定","云端","琉璃","红豆","落日","夏日","青柠","饼干","沧海",
+    "威化","北海","南瓜","心事","心动","银河","学园","日记","高校","星辰",
+    "芋泥","草莓","学院","布朗","丁香","幻想","樱桃","抹茶","汽水","柠檬",
+    "奶茶","温柔","香芋","天空","夜莺","栗子","玫瑰","少女","森林","小熊","精灵",
+    "流星","蝴蝶","山海","气泡","樱花","桃桃","星河","梦境","深海","小姐","海盐",
+    "苹果","叮叮","甜心","伯爵","蓝莓","白桃","咖啡","葡萄","红茶","晨曦","山楂"
+]
+	  var btn = document.getElementById("namebutton");
+	  var span = document.getElementById("namebutton_span");
+  	  var ONE = name[Math.floor(Math.random() * (name.length))];
+   	  var TWO = name[Math.floor(Math.random() * (name.length))];
+      span.innerHTML=ONE+TWO;
+	
 	}
 
 </script>
