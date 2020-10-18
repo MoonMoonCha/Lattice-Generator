@@ -107,7 +107,8 @@
     font-size: 30px;
     cursor: pointer;
 	font-family: "STXihei";
-	border-radius: 5px;
+    border-radius: 5px;
+    margin-top: 2%;
 }
 
 #name_DIV{
