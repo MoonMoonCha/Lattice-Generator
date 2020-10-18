@@ -9,15 +9,15 @@
         <!-- <script  src="js/Vibrant.js"></script>
         <script src="js/Vibrant.min.js"></script>
         <script type="text/javascript" src="js/rgbaster.js"></script>  -->
+        <link type="text/css" rel="stylesheet" href="css/style_A.css">
         <link rel="shortcut icon" href="favicon.ico">
-        <link  type="text/css" rel="stylesheet" href="css/main.css">
         <title>格纹宝</title>
     </head>
     <body style="text-align:center;width: 100%;height:100%">
         <div class="parent">
             <div class="white" id="white">
                 <a href="http://www.matools.com/image-color/?embed" target="_blank">
-                    <button class="uplobutton" title="上传图片，取出主色，请记下三种颜色，以便生成格纹">Take color from pictures!</button>
+                    <button class="uplobutton" title="上传图片，取出主色，请记下三种颜色，以便生成格纹">提取图片色</button>
                 </a>
                 <button class="probutton" onclick="FAQ()" title="">Q&#38;A</button>
 
@@ -62,7 +62,63 @@
             <img src="img/moonmooncha.png" alt="原作者：月亮猹" style="position: fixed;  bottom: 0px;left:46%;width: 50px;height:20px;"></img>
         </a>
     </body>
+
+
     <script type="text/javascript">
+ //--------------------手机orPC识别--------------------
+        var browser={
+            versions:function(){
+               var u = navigator.userAgent, app = navigator.appVersion;
+                //移动设备浏览器版本信息
+                return {
+                    //IE内核
+                    trident: u.indexOf('Trident') > -1,
+                    //opera内核      
+                    presto: u.indexOf('Presto') > -1,
+                    //苹果、谷歌内核          
+                    webKit: u.indexOf('AppleWebKit') > -1,
+                    //火狐内核
+                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                    //是否为移动终端
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/), 
+                    //ios终端
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                    //android终端或者uc浏览器
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, 
+                    //是否为iPhone或者QQHD浏览器
+                    iPhone: u.indexOf('iPhone') > -1 , 
+                    //是否iPad           
+                    iPad: u.indexOf('iPad') > -1,
+                    //是否web应该程序，没有头部与底部
+                    webApp: u.indexOf('Safari') == -1
+                };
+            }(), 
+            language:(navigator.browserLanguage || navigator.language).toLowerCase()  
+        }   
+           
+        if(browser.versions.mobile || browser.versions.ios || browser.versions.android || browser.versions.iPhone || browser.versions.iPad){
+                cssChange();     
+        }  
+         
+        function cssChange(){
+            var link = document.getElementsByTagName('link')[0];
+            //PC端应用的样式文件：style_A.css
+            //Mobile端应用样式文件：style_B.css
+            //注意保持link0是style
+            link.setAttribute('href','css/style_B.css');
+            console.log(document.getElementsByTagName('link')[0]);
+  
+           
+        }
+         
+ </script>
+
+
+
+
+
+    <script type="text/javascript">
+    //---------------------------------------界面按钮功能触发--------------------------------------
         function FAQ() {
             alert("Q:图片可以下载吗？\nA:由于开发时间有限，您只能截图（无限高清放大）而不是直接下载图片。\nQ:如何制作格裙样机？\nA:。\nQ:如何制作格裙？\nA:找别人帮你做。\nQ:成图可以商用吗？\nA:我认为店主不会要。\nQ:这个工具怎么使用？\nA:点击页面下方\'月亮猹\'观看教程视频。\nQ:为什么有的图有bug？\nA:因为开发者累了。\nQ:你还有什么问题？\nA:你没有了。");
         }
@@ -207,7 +263,7 @@
             colorbuttonCenter.setAttribute("style","width:"+mysvgWidth+"px;");
             var latticeLeft = document.getElementById("div_svg");
             if(window.innerWidth<window.innerHeight){
-                latticeLeft.setAttribute("style","margin-left:"+window.screen.width*0.45+"px;");  //手机
+                latticeLeft.setAttribute("style","margin-left:"+window.screen.width*0.40+"px;");  //手机
             } else {
                 latticeLeft.setAttribute("style","margin-left:"+window.screen.width*0.26+"px;");  //pc
             }
