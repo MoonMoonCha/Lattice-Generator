@@ -1,226 +1,104 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name=”viewport” content=”width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no”/>
-<script src="js/html2canvas.min.js"></script>
-<script src="js/rgbcolor.js"></script> 
-<script src="js/canvg.js"></script> 
-<!-- <script  src="js/Vibrant.js"></script> 
-<script  src="js/Vibrant.min.js"></script> 
-<script type="text/javascript" src="js/rgbaster.js"></script>  -->
-<link rel="shortcut icon" href="favicon.ico">
-<link rel="stylesheet" type="text/css" href="css/style.css">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name=”viewport” content=”width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no”/>
+        <script src="js/html2canvas.min.js"></script>
+        <script src="js/rgbcolor.js"></script>
+        <script src="js/canvg.js"></script>
+        <!-- <script  src="js/Vibrant.js"></script>
+        <script src="js/Vibrant.min.js"></script>
+        <script type="text/javascript" src="js/rgbaster.js"></script>  -->
+        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="stylesheet" href="css/main.css">
+        <title>格纹宝</title>
+    </head>
+    <body style="text-align:center;width: 100%;height:100%">
+        <div class="parent">
+            <div class="white" id="white">
+                <a href="http://www.matools.com/image-color/?embed" target="_blank">
+                    <button class="uplobutton" title="上传图片，取出主色，请记下三种颜色，以便生成格纹">Take color from pictures!</button>
+                </a>
+                <button class="probutton" onclick="FAQ()" title="">Q&#38;A</button>
+
+                <div class="maskbutton_DIV">
+                    <!-- <img src="img/maskico.ico" id="mask_ico" style="position: absolute;  width: 20px;margin-top: 20px;margin-left: 10px;"/> -->
+                    <button class="maskbutton" id="maskbutton1" title="每次点击，都能随机生成一个遮罩，如果您感觉卡住了，那只是随机到了同一个遮罩哦~" onclick="onMask(1)">&#20;&#20;Mask</button>
+                    <!--<img src="img/delmaskico.ico" id="mask_ico" style="position: absolute;  width: 20px;margin-top: 19px;margin-left: 7px;"/>-->
+                    <button class="maskbutton" id="maskbutton2" onclick="onMask(0)">No Mask</button>
+                    <!--Torrekie: THOSE ICONS SUCKS-->
+                </div>
+
+                <div id= "name_DIV">
+                    <button id="namebutton" onclick="onName(0)" >随机取名</button>
+                    <span id="namebutton_span" value="name">   </span>
+                </div>
+
+            </div>
+
+            <div class="lattice" id="div_svg">
+                <div id="title_Div">
+                    <img src="img/latt.png" id="title_img" alt="title" style="position: relative;  width: 100%;"/>
+                </div>
+                <div id="svg_img">
+                    <svg id="svg_my" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
+                    <div class="maskimg" id="img_mask"></div>
+                </div>
+                <div class="capture" id="capture" >
+                    <!-- <h4 style="color: #000; ">Hello world!</h4> -->
+                    <input class="colorbutton" type="color" title="背景色"id="color1" value="#ffcccc" />
+                    <input class="colorbutton" type="color" title="主色1" id="color2"  value="#DA70D6"/>
+                    <input class="colorbutton" type="color" title="主色2" id="color3"  value="#e5ffe5"/>
+                    <form id="colorCnotroll" title="随机辅助色">
+                    </form>
+                    <input class="GeButton" type="button" id="GeButton1" title="随机生成颜色、密度、条纹位置" value="Full-Auto（全随机）" onclick="onLoad(1)">
+                    </input>
+                    <input type="number" id="numbercolor" title="格纹密度上限" value="3"/>
+                    <input class="GeButton" type="button" id="GeButton2" title="您可以在上方自定义三个主色以及条纹密度，随机生成辅色和条纹位置" value="Semi-Auto(半随机)"  onclick="onLoad(0)" />
+                </div>
+            </div>
+        </div>
+        <a href="https://space.bilibili.com/421178217">
+            <img src="img/moonmooncha.png" alt="原作者：月亮猹" style="position: fixed;  bottom: 0px;left:46%;width: 50px;height:20px;"></img>
+        </a>
+    </body>
+    <script type="text/javascript">
+        function FAQ() {
+            alert("Q:图片可以下载吗？\nA:由于开发时间有限，您只能截图（无限高清放大）而不是直接下载图片。\nQ:如何制作格裙样机？\nA:。\nQ:如何制作格裙？\nA:找别人帮你做。\nQ:成图可以商用吗？\nA:我认为店主不会要。\nQ:这个工具怎么使用？\nA:点击页面下方\'月亮猹\'观看教程视频。\nQ:为什么有的图有bug？\nA:因为开发者累了。\nQ:你还有什么问题？\nA:你没有了。");
+        }
+        function onMask(isMaskOn) {
+            var MaskArray = [ "bag", "Bigunderpants", "bottle", "bowtie", "camera", "fakeskirt", "notebook", "Ordinaryskirt" ];
+            if (isMaskOn) {
+                var parent = document.getElementById("img_mask");
+                var maskimg = document.getElementById("img_current");
+                if (maskimg) { //替换
+                    var masknumber = Math.ceil(Math.random()*MaskArray.length);
+                    maskimg.src = "img/" + MaskArray[masknumber-1] + ".png"; //随机mask
+                } else {  //新建
+                    var maskimg = document.createElement("img");
+                    var masknumber = Math.ceil(Math.random()*MaskArray.length);
+                    maskimg.id = "img_current";
+                    maskimg.src = "img/" + MaskArray[masknumber-1] + ".png"; //随机mask
+                    if (window.innerWidth<window.innerHeight) {
+                        maskimg.width = window.innerHeight*0.26+1;  //比svg稍微大一些
+                        maskimg.height = window.innerHeight*0.26+1;
+                    } else {
+                        maskimg.width = window.innerWidth*0.26+1;
+                        maskimg.height = window.innerWidth*0.26+1;
+                    }
+                    parent.appendChild(maskimg);
+                }
+            } else {  //取消
+                var maskimg = document.createElement("img");
+                var maskimg = document.getElementById("img_current");
+                maskimg.src = "img/none.png"; //none
+            }
+        }
 
 
-<title>格纹宝</title>
-
-<body  style="text-align:center;width: 100%;height:100%">
-	
-
-		<!-- <div class="parent">
-			<div class="left" width="30%" height="400px" style="text-align:left;">
-				<iframe src="http://www.matools.com/image-color/?embed" 
-			 scrolling="yes" style="border:0px;">
-		</iframe>
-			</div> -->
-
-   <div class = "parent" >
-	
-			
-	<div class = "white" id="white" >
-
-		<a  href = "http://www.matools.com/image-color/?embed" target="_blank" >
-		<button  class = "uplobutton" 
-		title="上传图片，取出主色，请记下三种颜色，以便生成格纹">Take color from pictures!</button>
-		</a>
-		<button  class = "probutton" 
-		title="Q:图片可以下载吗？&#13;A:由于开发时间有限，您只能截图（无限高清放大）而不是直接下载图片。&#13;
-			   Q:如何制作格裙样机？&#13;A:。&#13;
-			   Q:如何制作格裙？&#13;A:找别人帮你做。&#13;
-			   Q:成图可以商用吗？&#13;A:我认为店主不会要。&#13;
-			   Q:这个工具怎么使用？&#13;A:点击页面下方'月亮猹'观看教程视频。&#13;
-			   Q:为什么有的图有bug？&#13;A:因为开发者累了。&#13;
-			   Q:你还有什么问题？&#13;A:你没有了。&#13;" 
-			   onclick="alertTitle()"
-		>Q&A</button>
-
-		<div class = "maskbutton_DIV">
-		<img src="img/maskico.ico"  id="mask_ico"   style="position: absolute;  width: 20px;margin-top: 20px;margin-left: 10px;"/>
-		<button class = "maskbutton" id="maskbutton1" 
-		title="每次点击，都能随机生成一个遮罩，如果您感觉卡住了，那只是随机到了同一个遮罩哦~"
-		onclick="onMask(1)">&nbsp&nbsp&nbspMask</button>
-		<img src="img/delmaskico.ico"  id="mask_ico"   style="position: absolute;  width: 20px;margin-top: 19px;margin-left: 7px;"/>
-		<button class = "maskbutton" id="maskbutton2" onclick="onMask(0)" >&nbsp&nbsp&nbspNo Mask</button>
-		</div>
-
-		<div id= "name_DIV">
-		<button id="namebutton" onclick="onName(0)" >随机取名</button>
-        <span id="namebutton_span" value="name">   </span>
-
-		</div>
-
-	
-
-	</div>
-
-	
-
-
-	<div class="lattice" id="div_svg"  >
-
-		<div id ="title_Div">
-	<img src="img/latt.png"  id="title_img" alt="title"  style="position: relative;  width: 100%;"/>
-</div>
-
-	<div id = "svg_img">
-	   <svg id="svg_my"  version="1.1" xmlns='http://www.w3.org/2000/svg'>
-	   </svg>
-
-	   <div class="maskimg" id="img_mask" ></div>
-
-    </div>
-
-	<div class = "capture" id="capture" >
-		<!-- <h4 style="color: #000; ">Hello world!</h4> -->
-
-		 <input class = "colorbutton" type="color" title="背景色"id="color1" value="#ffcccc" />
-		 <input class = "colorbutton" type="color" title="主色1" id="color2"  value="#DA70D6"/>
-		 <input class = "colorbutton" type="color" title="主色2" id="color3"  value="#e5ffe5"/>
-		 <form id="colorCnotroll" title="随机辅助色">
-
-		 </form>
-		
-
-		 <input class ="GeButton" type="button"  id="GeButton1"
-		 title="随机生成颜色、密度、条纹位置"
-		 value="Full-Auto（全随机）"  onclick="onLoad(1)">
-		</input>
-
-		 <input type="number" id="numbercolor" title="格纹密度上限" value="3"/>
-
-
-		<input class ="GeButton" type="button"  id="GeButton2"
-		 title="您可以在上方自定义三个主色以及条纹密度，随机生成辅色和条纹位置"
-		 value="Semi-Auto(半随机)"  onclick="onLoad(0)" />
-	</div>
-
-
-
-	</div>
-
-
-
-	</div>
-
-
-	<a href="https://space.bilibili.com/421178217">
-		<img src="img/moonmooncha.png"  alt="月亮猹"  style="position: fixed;  bottom: 0px;left:46%;width: 50px;height:20px;"></img>
-	</a>
-
-</body>
-
-
-
-
-
-
-
-<script type="text/javascript">
-
-	//图片取色器
-/*	function extractColors(imgEl) {
-		// get current slider image
-		var imgEl=document.createElement("img");
-        imgEl.src="https://www.w3school.com.cn/i/eg_tulip.jpg";
-		console.log(imgEl)
-		var vibrant = new Vibrant(imgEl, 48, 5), swatches = vibrant.swatches(), i = 0;
-		for (var swatch in swatches) {
-			if (swatches.hasOwnProperty(swatch) && swatches[swatch] ) {
-				console.log(swatches[swatch].getHex())
-				palette.style.color = swatches[swatch].getHex();
-			}
-			++i;
-		}
-	}
-	*/
-
-	//var img = document.getElementById('tui-logo');//或者 var img="图片路径"；
-//js亦存在作用域，当你的方法声明在 $(function{}) 之中时，表示该方法只能在该方法内部被使用
-
-/*
-	function exaColor() {
-
-		try{
-   if(RGBaster && typeof(RGBaster) == "function"){
-	   console.log("存在")
-    //test();
-   }
-  }catch(e){
-   alert("方法不存在");
-  }
-
-	
-		//var img="https://www.w3school.com.cn/i/eg_tulip.jpg";
-		var img = "examples/octocat.png";
-        RGBaster.colors(img, {
-          success: function(payload) {
-            //以下三种颜色，都是RGB格式存在
-            // payload.dominant 主色
-            console.log(payload.dominant);
-            // payload.secondary 次色
-            console.log(payload.secondary);
-            // payload.palette 调色板
-            console.log(payload.palette);
-		  }
-		});
-
-		
-}
-
-	*/		
-	function onMask(isMaskOn){
-		var MaskArray = ["bag","Bigunderpants","bottle","bowtie","camera","fakeskirt","notebook","Ordinaryskirt"]
-		if(isMaskOn){
-		var parent=document.getElementById("img_mask");
-	    var maskimg=document.getElementById("img_current");
-		if(maskimg){ //替换
-			var masknumber = Math.ceil(Math.random()*MaskArray.length);
-			maskimg.src="img/"+MaskArray[masknumber-1]+".png"; //随机mask
-			}
-		else{  //新建
-	   var maskimg=document.createElement("img");
-	   var masknumber = Math.ceil(Math.random()*MaskArray.length)
-	   maskimg.id = "img_current";
-	   maskimg.src="img/"+MaskArray[masknumber-1]+".png"; //随机mask
-	   if(window.innerWidth<window.innerHeight){
-	   maskimg.width = window.innerHeight*0.26+1;  //比svg稍微大一些
-	   maskimg.height = window.innerHeight*0.26+1;
-	   }else{
-		maskimg.width = window.innerWidth*0.26+1;
-	   maskimg.height = window.innerWidth*0.26+1;
-	   }
-	   parent.appendChild(maskimg);
-	}
-	}
-	else{  //取消
-	   var maskimg=document.createElement("img");
-	   var maskimg=document.getElementById("img_current");
-	   maskimg.src="img/none.png"; //none
-	}
-	}
-
-
-	function alertTitle(){
-		alert(
-			"Q:图片可以下载吗？A:由于开发时间有限，您只能截图（无限高清放大）而不是直接下载图片。\nQ:如何制作格裙样机？A:搜索JK样机教程。\nQ:如何制作格裙？A:找别人帮你做。\nQ:成图可以商用吗？A:我认为店主不会要。\nQ:这个工具怎么使用？A:点击页面下方'月亮猹'观看教程视频。\nQ:为什么有的图有bug？A:因为开发者累了。\nQ:你还有什么问题？A:你没有了。" 	
-		);
-	}
-
-	function onName(){
-
-	//语料来自猹的往期分析
-		var name = [
+        function onName(){
+       //语料来自往期分析
+       var name = [
     "榴莲","芝士","软糖","浪漫","奶糖","蓝桥","情书","海岸","玻璃","薄荷",
     "星象","约定","云端","琉璃","红豆","落日","夏日","青柠","饼干","沧海",
     "威化","北海","南瓜","心事","心动","银河","学园","日记","高校","星辰",
@@ -228,228 +106,188 @@
     "奶茶","温柔","香芋","天空","夜莺","栗子","玫瑰","少女","森林","小熊","精灵",
     "流星","蝴蝶","山海","气泡","樱花","桃桃","星河","梦境","深海","小姐","海盐",
     "苹果","叮叮","甜心","伯爵","蓝莓","白桃","咖啡","葡萄","红茶","晨曦","山楂"
-]
-	  var btn = document.getElementById("namebutton");
-	  var span = document.getElementById("namebutton_span");
-  	  var ONE = name[Math.floor(Math.random() * (name.length))];
-   	  var TWO = name[Math.floor(Math.random() * (name.length))];
-      span.innerHTML=ONE+TWO;
-	
-	}
+    ]
+    var btn = document.getElementById("namebutton");
+    var span = document.getElementById("namebutton_span");
+    var ONE = name[Math.floor(Math.random() * (name.length))];
+    var TWO = name[Math.floor(Math.random() * (name.length))];
+    span.innerHTML=ONE+TWO;
+    }
 
-</script>
+        function onLoad(random) {
+            //---------------------------------------------------------准备颜色、密度、按钮显示-------------------------------------
+            //定义宏观变量
+            var color1,color2,color3;
+            var colorAuxiliary =new Array();
+            var AuxiliaryNumber;
+            
+            if (random) {
+                //console.log("调用随机模式",random)
+                //随机3主色
+                color1 = '#'+Math.floor(Math.random()*16777215).toString(16);
+                color2 = '#'+Math.floor(Math.random()*16777215).toString(16);
+                color3 = '#'+Math.floor(Math.random()*16777215).toString(16);
+                //判断随机色的可用性,会出现少一位数无法识别的颜色
+                if (color1.length==6) {color1 = "#0"+color1.substr(1,5)}
+                if (color2.length==6) {color2 = "#0"+color2.substr(1,5)}
+                if (color3.length==6) {color3 = "#0"+color3.substr(1,5)}
+                
+                document.getElementById("color1").value = color1; //赋值
+                document.getElementById("color2").value = color2; //赋值
+                document.getElementById("color3").value = color3; //赋值
 
+                //console.log("随机颜色",color1,color2,color3)
 
-<script>
-	function onLoad(random){
+                //随机生成密度上限（针对所有颜色）
+                var number1 = Math.random();
+                var numbercolorButton = document.getElementById("numbercolor");
+                numbercolorButton.value = numbercolor1 = Math.ceil(number1 * 6);
+                
+                //console.log("随机密度",numbercolor1)
+            } else {
+                //半随机状态
+                //console.log("调用半自动模式",random)
+                //读取手动输入的颜色
+                color1 = document.getElementById("color1").value;
+                color2 = document.getElementById("color2").value;
+                color3 = document.getElementById("color3").value;
+                //console.log("几种颜色",color1,color2,color3)
+                //每个颜色，随机生成几条线,可以手动输入密集度 （针对所有颜色）
+                var number1 = Math.random();
+                numbercolor1 = Math.ceil(number1 * (document.getElementById("numbercolor").value));
+                //console.log("密度",document.getElementById("numbercolor").value)
+            }
+            ////动态主色背景样式
+            var body = document.body;
+            body.setAttribute('style', "background-color:"+color1);
+            //  var svgBorder =document.getElementById("div_svg");
+            //  svgBorder.setAttribute('style', "border:2px solid "+color2);
+            //body.setAttribute("background-color",color1);
+            //随机的辅色数量
+            AuxiliaryNumber =  Math.ceil(Math.random()*5); //辅助色系数量 5以内随机
+            //console.log("辅助色数量"+AuxiliaryNumber)
+            //为了正确显示每次的辅色，清除之前的随机辅助色
+            if (document.getElementsByName("colorAdd")) {
+                var parent = document.getElementById("colorCnotroll");
+                var child = document.getElementsByName("colorAdd");
+                for(var j=0;j<child.length;j++){
+                    parent.removeChild(child[j]);
+                }
+            }
+            //无论是全随机还是半随机都是随机辅色,生成随机辅色并且显示为不可使用的按钮
+            for (var i = 1;i<=AuxiliaryNumber;i++) {
+                var tempColr = '#'+Math.floor(Math.random()*16777215).toString(16);
+                colorAuxiliary.push(tempColr);
+                var addColor = document.getElementById("colorCnotroll");
+                //创建input
+                var input = document.createElement("input");
+                input.type = "color";
+                input.id = "colorAdds";//"questions[" + count + "]";
+                input.value=tempColr;
+                input.className="colorbuttonsmall"; //是classname 不是class
+                input.name = "colorAdd";//"questions[" + count + "].name";
+                input.disabled="disabled";
+                addColor.appendChild(input);
+            }
+            //console.log("辅助色"+colorAuxiliary)
+            //--------------------------------------------------------------开始绘制--------------------------------------------------
+            //生成SVG,保持标题、svg、色盘居中
+            var mysvg = document.getElementById("svg_my");
+            var mymask = document.getElementById("img_mask");
+            //适应手机
+            //console.log(window.innerWidth,window.innerHeight,document.body.clientWidth,window.screen.width)
+            if (window.innerWidth<window.innerHeight) {
+                var mysvgWidth = window.innerHeight*0.26;//300;
+            } else {
+                var mysvgWidth = window.innerWidth*0.26;//300;
+            }
+            mysvg.setAttribute("style", "width:" + mysvgWidth + "px;" + "height:" + mysvgWidth + "px;margin-top:" + window.innerHeight * 0.1 + "px;");//相对于当前窗口高度下移
+            mymask.setAttribute("style", "margin-top:" + window.innerHeight * 0.1 + "px;");//相对于当前窗口高度下移
+            var colorbuttonCenter = document.getElementById("capture");
+            colorbuttonCenter.setAttribute("style","width:"+mysvgWidth+"px;");
+            var latticeLeft = document.getElementById("div_svg");
+            if(window.innerWidth<window.innerHeight){
+                latticeLeft.setAttribute("style","margin-left:"+window.screen.width*0.45+"px;");  //手机
+            } else {
+                latticeLeft.setAttribute("style","margin-left:"+window.screen.width*0.26+"px;");  //pc
+            }
 
+            var title_center = document.getElementById("title_img");
+            title_center.setAttribute("style","width:"+mysvgWidth+"px;position: absolute;margin-top:15px;");
 
-//---------------------------------------------------------准备颜色、密度、按钮显示-------------------------------------
-	//定义宏观变量
-	var color1,color2,color3;
-	var colorAuxiliary =new Array();
-    var AuxiliaryNumber;
+            //绘制横纹背景色
+            var rectObj0 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            rectObj0.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+            rectObj0.setAttribute("width",mysvgWidth);
+            rectObj0.setAttribute("height",mysvgWidth);
+            rectObj0.setAttribute("style","fill:"+color1+";stroke-width:0;stroke:"+color1);  //color 1
+            document.querySelector('svg').appendChild(rectObj0);
 
+            //绘制横纹
 
+            //主色1
+            var rectObj1Array =   new Array(); //动态数组记录横纹1位置
+            for (var i = 1; i <= numbercolor1; i += 1) {
+                var rectObj1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rectObj1.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+                rectObj1.setAttribute("width",mysvgWidth);
+                var temph = Math.ceil(Math.random()*50);
+                var tempy = Math.ceil(Math.random()*mysvgWidth);
+                //首先判断主色1自己与自己是否重叠
+                for (var m = 0; m < rectObj1Array.length; m += 1) {  //判断y的位置与自己是否重叠、包裹
+                    for (var j=0;j<10000;j++) //设定最多判断10000次 万次后可能出现交叉错误
+                    {
+                        if(rectObj1Array[m][1]<tempy&&tempy<rectObj1Array[m][0]+rectObj1Array[m][1])
+                        {
+                            tempy = Math.ceil(Math.random()*mysvgWidth); //如果有重叠，重新生成
+                        } else {
+                            //console.log(rectObj1Array[m][1],rectObj1Array[m][0]+rectObj1Array[m][1],tempy)
+                        break;}
+                    }
+                }
+                //console.log("y的最终数值"+tempy);
 
-	if(random){	
-	//console.log("调用随机模式",random)
-	//随机3主色
- 	color1 ='#'+Math.floor(Math.random()*16777215).toString(16);
- 	color2 ='#'+Math.floor(Math.random()*16777215).toString(16);
- 	color3 ='#'+Math.floor(Math.random()*16777215).toString(16);
+                for (var m = 0; m < rectObj1Array.length; m += 1) {  //判断y+h的位置是否超出
+                    for (var j=0;j<10000;j++) //判断10000次
+                    {
+                        if(rectObj1Array[m][1]<(temph+tempy)&&tempy<rectObj1Array[m][1])
+                        {
+                            temph = Math.ceil(Math.random()*(rectObj1Array[m][1]-tempy)); //重新生成,宽度不能超过
+                        } else {
+                            //console.log(rectObj1Array[m][1],rectObj1Array[m][0]+rectObj1Array[m][1],temph)
+                        break;}
+                    }
+                }
+                //console.log("h的最终数值"+temph);
 
-    //判断随机色的可用性,会出现少一位数无法识别的颜色
-   if (color1.length==6) {color1 = "#0"+color1.substr(1,5)}
-   if (color2.length==6) {color2 = "#0"+color2.substr(1,5)}
-   if (color3.length==6) {color3 = "#0"+color3.substr(1,5)}
-
-	document.getElementById("color1").value = color1; //赋值
-	document.getElementById("color2").value = color2; //赋值
-	document.getElementById("color3").value = color3; //赋值
-
-    //console.log("随机颜色",color1,color2,color3)
-
-    //随机生成密度上限（针对所有颜色）
-	var number1 = Math.random();      
-	var numbercolorButton = document.getElementById("numbercolor");        
-	numbercolorButton.value = numbercolor1 = Math.ceil(number1 * 6); 
-
-	//console.log("随机密度",numbercolor1)
-
-     }else {  
-		 
-	//半随机状态
-	 //console.log("调用半自动模式",random)
-	//读取手动输入的颜色
- 	color1 =document.getElementById("color1").value;
- 	color2 =document.getElementById("color2").value;
- 	color3 =document.getElementById("color3").value;
-    //console.log("几种颜色",color1,color2,color3)
-
-    //每个颜色，随机生成几条线,可以手动输入密集度 （针对所有颜色）
-	var number1 = Math.random();              
-	numbercolor1 = Math.ceil(number1 * (document.getElementById("numbercolor").value));    
-	//console.log("密度",document.getElementById("numbercolor").value)
-	}
-
-
-	////动态主色背景样式
-    var body =document.body;
-    body.setAttribute('style', "background-color:"+color1);
-
-	
-
-	//  var svgBorder =document.getElementById("div_svg");
-
-    //  svgBorder.setAttribute('style', "border:2px solid "+color2);
-
-	
-    //body.setAttribute("background-color",color1);
-
-    //随机的辅色数量
-    AuxiliaryNumber =  Math.ceil(Math.random()*5); //辅助色系数量 5以内随机
-    //console.log("辅助色数量"+AuxiliaryNumber)
-    //为了正确显示每次的辅色，清除之前的随机辅助色
-  if(document.getElementsByName("colorAdd")){
-	var parent = document.getElementById("colorCnotroll");
-	var child=document.getElementsByName("colorAdd");
-	for(var j=0;j<child.length;j++){
-		parent.removeChild(child[j]);
-	}
-  }
-   //无论是全随机还是半随机都是随机辅色,生成随机辅色并且显示为不可使用的按钮
-  for(var i = 1;i<=AuxiliaryNumber;i++){
-	  var tempColr = '#'+Math.floor(Math.random()*16777215).toString(16);
-	  colorAuxiliary.push(tempColr);
-	  var addColor = document.getElementById("colorCnotroll");
-      //创建input
-        var input = document.createElement("input");
-        input.type = "color";
-        input.id = "colorAdds";//"questions[" + count + "]";
-		input.value=tempColr;
-		input.className="colorbuttonsmall"; //是classname 不是class
-        input.name = "colorAdd";//"questions[" + count + "].name";
-		input.disabled="disabled";
-        addColor.appendChild(input);       
-}
-    //console.log("辅助色"+colorAuxiliary)
-
-//--------------------------------------------------------------开始绘制--------------------------------------------------
-
-//生成SVG,保持标题、svg、色盘居中
-     var mysvg = document.getElementById("svg_my");
-	 var mymask = document.getElementById("img_mask");
-//适应手机
-
-//console.log(window.innerWidth,window.innerHeight,document.body.clientWidth,window.screen.width)
-if(window.innerWidth<window.innerHeight){
-	var mysvgWidth = window.innerHeight*0.26;//300;
-
-}else{
-
-	var mysvgWidth = window.innerWidth*0.26;//300;
-}
-   mysvg.setAttribute("style","width:"+mysvgWidth+"px;"+"height:"+mysvgWidth+"px;margin-top:"+window.innerHeight*0.1+"px;");//相对于当前窗口高度下移
-   mymask.setAttribute("style","margin-top:"+window.innerHeight*0.1+"px;");//相对于当前窗口高度下移
-  
-	 var colorbuttonCenter = document.getElementById("capture");
-	 colorbuttonCenter.setAttribute("style","width:"+mysvgWidth+"px;");
-
-	 var latticeLeft = document.getElementById("div_svg");
-    if(window.innerWidth<window.innerHeight){
-	latticeLeft.setAttribute("style","margin-left:"+window.screen.width*0.45+"px;");  //手机
-    }else{
-	latticeLeft.setAttribute("style","margin-left:"+window.screen.width*0.26+"px;");  //pc
-}
-
-
-
-
-	 
-	 var title_center = document.getElementById("title_img");
-	 title_center.setAttribute("style","width:"+mysvgWidth+"px;position: absolute;margin-top:15px;");
-
-
-
-	 
-
-//绘制横纹背景色
-		var rectObj0 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		rectObj0.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObj0.setAttribute("width",mysvgWidth);
-		rectObj0.setAttribute("height",mysvgWidth);
-		rectObj0.setAttribute("style","fill:"+color1+";stroke-width:0;stroke:"+color1);  //color 1
-        document.querySelector('svg').appendChild(rectObj0);
-
-//绘制横纹
-
-        //主色1
-		var rectObj1Array =   new Array(); //动态数组记录横纹1位置
-		for (var i = 1; i <= numbercolor1; i += 1) {
-        var rectObj1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		rectObj1.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObj1.setAttribute("width",mysvgWidth);
-		var temph = Math.ceil(Math.random()*50);
-         var tempy = Math.ceil(Math.random()*mysvgWidth);
-
-		 //首先判断主色1自己与自己是否重叠
-		 for (var m = 0; m < rectObj1Array.length; m += 1) {  //判断y的位置与自己是否重叠、包裹
-			for (var j=0;j<10000;j++) //设定最多判断10000次 万次后可能出现交叉错误
-        {
-			if(rectObj1Array[m][1]<tempy&&tempy<rectObj1Array[m][0]+rectObj1Array[m][1])
-			{	
-				tempy = Math.ceil(Math.random()*mysvgWidth); //如果有重叠，重新生成
-			}
-			else {
-				//console.log(rectObj1Array[m][1],rectObj1Array[m][0]+rectObj1Array[m][1],tempy)
-				break;}	
-        }
-		}
-		//console.log("y的最终数值"+tempy);
-
-		for (var m = 0; m < rectObj1Array.length; m += 1) {  //判断y+h的位置是否超出
-			for (var j=0;j<10000;j++) //判断10000次
-        {
-			if(rectObj1Array[m][1]<(temph+tempy)&&tempy<rectObj1Array[m][1])
-        {	
-	    temph = Math.ceil(Math.random()*(rectObj1Array[m][1]-tempy)); //重新生成,宽度不能超过
-        }
-			else {
-				//console.log(rectObj1Array[m][1],rectObj1Array[m][0]+rectObj1Array[m][1],temph)
-				break;}		
-        }
-		}
-		//console.log("h的最终数值"+temph);
-
-        //赋值
-		 rectObj1.setAttribute("height",temph);
-		 rectObj1.setAttribute('y',tempy );
-         rectObj1Array.push([temph,tempy]);
-		 rectObj1.setAttribute("style","fill:"+color2+";stroke-width:0;stroke:"+color2);  //color 2
-         document.querySelector('svg').appendChild(rectObj1);
-         }
+                //赋值
+                rectObj1.setAttribute("height",temph);
+                rectObj1.setAttribute('y',tempy );
+                rectObj1Array.push([temph,tempy]);
+                rectObj1.setAttribute("style","fill:"+color2+";stroke-width:0;stroke:"+color2);  //color 2
+                document.querySelector('svg').appendChild(rectObj1);
+            }
 
 
-	    //主色2
-		var rectObj2Array =   new Array(); //动态数组记录横纹2位置
-		var rectObj1_2Array = rectObj1Array.concat(); //动态数组记录横纹位置,1_2拼合  js复制数组,原数组不变,直接相等会导致地址被复制
-		for (var i = 1; i <= numbercolor1; i += 1) {
-        var rectObj2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		rectObj2.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObj2.setAttribute("width",mysvgWidth);
+            //主色2
+            var rectObj2Array = new Array(); //动态数组记录横纹2位置
+            var rectObj1_2Array = rectObj1Array.concat(); //动态数组记录横纹位置,1_2拼合  js复制数组,原数组不变,直接相等会导致地址被复制
+            for (var i = 1; i <= numbercolor1; i += 1) {
+                var rectObj2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rectObj2.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+                rectObj2.setAttribute("width",mysvgWidth);
 
-		var temph = Math.ceil(Math.random()*50);
-		var tempy = Math.ceil(Math.random()*mysvgWidth);
+                var temph = Math.ceil(Math.random()*50);
+                var tempy = Math.ceil(Math.random()*mysvgWidth);
         
-		//判断主色2横纹与自己、主色1是否交叠
-		//这些判断不能分开进行，否则满足了下一个条件又不能满足上一个条件，所以需要拼接两个数组进行判断，按照这个思路多一个颜色也可以了
-		//先判断好y，再y+h
+            //判断主色2横纹与自己、主色1是否交叠
+            //这些判断不能分开进行，否则满足了下一个条件又不能满足上一个条件，所以需要拼接两个数组进行判断，按照这个思路多一个颜色也可以了
+            //先判断好y，再y+h
 
-		/*
-       //判断自己
-       for (var m = 0; m < rectObj1_2Array.length; m += 1) {  //判断y的位置与自己和他人是否重叠
-			console.log("自己还在循环")
+            /*
+             //判断自己
+             for (var m = 0; m < rectObj1_2Array.length; m += 1) {  //判断y的位置与自己和他人是否重叠
+             console.log("自己还在循环")
 			for (var j=0;j<10000;j++) //判断10000次 万次后可能出现交叉错误
         {
 			if(rectObj1_2Array[m][1]<tempy&&tempy<rectObj1_2Array[m][0]+rectObj1_2Array[m][1])
@@ -477,71 +315,69 @@ if(window.innerWidth<window.innerHeight){
 		*/
 
 
- //判断重叠
- for (var m = 0; m < rectObj1_2Array.length; m += 1) {  //判断y的位置与自己活上一个颜色是否重叠
-			for (var j=0;j<10000;j++) //判断10000次 万次后可能出现交叉错误
-        {
-			if(rectObj1_2Array[m][1]<tempy&&tempy<rectObj1_2Array[m][0]+rectObj1_2Array[m][1])
-			{	
-				tempy = Math.ceil(Math.random()*mysvgWidth); //重新生成
-			}
-			else {
-				//console.log(rectObj1_2Array[m][1],rectObj1_2Array[m][0]+rectObj1_2Array[m][1],tempy)
-				break;}
-        }
-		}
-		//console.log("color 3 y的最终数值"+tempy);
+            //判断重叠
+            for (var m = 0; m < rectObj1_2Array.length; m += 1) {  //判断y的位置与自己活上一个颜色是否重叠
+                for (var j=0;j<10000;j++) //判断10000次 万次后可能出现交叉错误
+                {
+                    if(rectObj1_2Array[m][1]<tempy&&tempy<rectObj1_2Array[m][0]+rectObj1_2Array[m][1])
+                    {
+                        tempy = Math.ceil(Math.random()*mysvgWidth); //重新生成
+                    } else {
+                        //console.log(rectObj1_2Array[m][1],rectObj1_2Array[m][0]+rectObj1_2Array[m][1],tempy)
+                break;}
+                }
+            }
+            //console.log("color 3 y的最终数值"+tempy);
 
 
-		for (var m = 0; m < rectObj1_2Array.length; m += 1) {  //判断y+h的位置，不能进入或者包裹
-			for (var j=0;j<10000;j++) //判断10000次
-        {
-			if(rectObj1_2Array[m][1]<(temph+tempy)&&tempy<rectObj1_2Array[m][1])
-			{	
-				temph = Math.ceil(Math.random()*(rectObj1_2Array[m][1]-tempy)); //重新生成,宽度不能超过
-			}
-			else {
-				//console.log(tempy,rectObj1_2Array[m][1],temph+tempy,"最终结果")
-				break;}	
-        }
-		}
-		//console.log("h的最终数值"+temph);
+            for (var m = 0; m < rectObj1_2Array.length; m += 1) {  //判断y+h的位置，不能进入或者包裹
+                for (var j=0;j<10000;j++) //判断10000次
+                {
+                    if(rectObj1_2Array[m][1]<(temph+tempy)&&tempy<rectObj1_2Array[m][1])
+                    {
+                        temph = Math.ceil(Math.random()*(rectObj1_2Array[m][1]-tempy)); //重新生成,宽度不能超过
+                    } else {
+                        //console.log(tempy,rectObj1_2Array[m][1],temph+tempy,"最终结果")
+                    break;}
+                }
+            }
+            //console.log("h的最终数值"+temph);
 
 
 
-        //赋值
-		rectObj2.setAttribute("height",temph);
-		rectObj2.setAttribute('y', tempy);
-		rectObj1_2Array.push([temph,tempy]);
-		rectObj2Array.push([temph,tempy]);
-		rectObj2.setAttribute("style","fill:"+color3+";stroke-width:0;stroke:"+color3);  //color 3
-        document.querySelector('svg').appendChild(rectObj2);
-}
+            //赋值
+            rectObj2.setAttribute("height",temph);
+            rectObj2.setAttribute('y', tempy);
+            rectObj1_2Array.push([temph,tempy]);
+            rectObj2Array.push([temph,tempy]);
+            rectObj2.setAttribute("style","fill:"+color3+";stroke-width:0;stroke:"+color3);  //color 3
+            document.querySelector('svg').appendChild(rectObj2);
+            }
 
 
-//竖纹
+            //竖纹
 
-		 //主色1
-		for (var i = 1; i <= numbercolor1; i += 1) {
-        var rectObj3 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		rectObj3.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObj3.setAttribute("height",mysvgWidth);
-		rectObj3.setAttribute("width",rectObj1Array[i-1][0]);	 
-		rectObj3.setAttribute('x', rectObj1Array[i-1][1]);
-		rectObj3.setAttribute("style","fill:"+color2+";stroke-width:0;stroke:"+color2);  //color 2
-        document.querySelector('svg').appendChild(rectObj3);
-        }
+            //主色1
+            for (var i = 1; i <= numbercolor1; i += 1) {
+                var rectObj3 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rectObj3.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+                rectObj3.setAttribute("height",mysvgWidth);
+                rectObj3.setAttribute("width",rectObj1Array[i-1][0]);
+                rectObj3.setAttribute('x', rectObj1Array[i-1][1]);
+                rectObj3.setAttribute("style","fill:"+color2+";stroke-width:0;stroke:"+color2);  //color 2
+                document.querySelector('svg').appendChild(rectObj3);
+            }
 
-	    //主色2
-		for (var i = 1; i <= numbercolor1; i += 1) {
-        var rectObj4 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		rectObj4.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObj4.setAttribute("height",mysvgWidth);
-		rectObj4.setAttribute("width",rectObj2Array[i-1][0]);
-		rectObj4.setAttribute('x', rectObj2Array[i-1][1]);
-		rectObj4.setAttribute("style","fill:"+color3+";stroke-width:0;stroke:"+color3);  //color 3
-        document.querySelector('svg').appendChild(rectObj4);
-        }
+            //主色2
+            for (var i = 1; i <= numbercolor1; i += 1) {
+                var rectObj4 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rectObj4.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+                rectObj4.setAttribute("height",mysvgWidth);
+                rectObj4.setAttribute("width",rectObj2Array[i-1][0]);
+                rectObj4.setAttribute('x', rectObj2Array[i-1][1]);
+                rectObj4.setAttribute("style","fill:"+color3+";stroke-width:0;stroke:"+color3);  //color 3
+                document.querySelector('svg').appendChild(rectObj4);
+            }
 
 
 //像素化
@@ -598,128 +434,124 @@ img.onload = function() {
 
  //绘制svg斜纹-
 
-        //右上斜纹
-		for (var i = 1; i <= mysvgWidth; i += 2) {
-        var rectObjline = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-		rectObjline.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObjline.setAttribute("x1",i);
-		rectObjline.setAttribute("x2",mysvgWidth);
-		rectObjline.setAttribute("y1",0);
-		rectObjline.setAttribute("y2",mysvgWidth-i);
-		rectObjline.setAttribute("style","stroke-width:0.5;stroke:"+color1);  
-         document.querySelector('svg').appendChild(rectObjline);
-         }
-		 //左下斜纹
-		for (var i = 1; i <= mysvgWidth; i += 2) {
-        var rectObjline2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-		rectObjline2.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObjline2.setAttribute("x1",0);
-		rectObjline2.setAttribute("x2",mysvgWidth-i);
-		rectObjline2.setAttribute("y1",i);
-		rectObjline2.setAttribute("y2",mysvgWidth);
-		rectObjline2.setAttribute("style","stroke-width:0.5;stroke:"+color1); 
-		document.querySelector('svg').appendChild(rectObjline2);
-        }
+            //右上斜纹
+            for (var i = 1; i <= mysvgWidth; i += 2) {
+                var rectObjline = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                rectObjline.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+                rectObjline.setAttribute("x1",i);
+                rectObjline.setAttribute("x2",mysvgWidth);
+                rectObjline.setAttribute("y1",0);
+                rectObjline.setAttribute("y2",mysvgWidth-i);
+                rectObjline.setAttribute("style","stroke-width:0.5;stroke:"+color1);
+                document.querySelector('svg').appendChild(rectObjline);
+            }
+            //左下斜纹
+            for (var i = 1; i <= mysvgWidth; i += 2) {
+                var rectObjline2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                rectObjline2.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+                rectObjline2.setAttribute("x1",0);
+                rectObjline2.setAttribute("x2",mysvgWidth-i);
+                rectObjline2.setAttribute("y1",i);
+                rectObjline2.setAttribute("y2",mysvgWidth);
+                rectObjline2.setAttribute("style","stroke-width:0.5;stroke:"+color1);
+                document.querySelector('svg').appendChild(rectObjline2);
+            }
 
 		
 
 
-//绘制不同色交叠处
-//不同颜色交叠 横纹在上 透出底部的竖纹 条纹
+        //绘制不同色交叠处
+        //不同颜色交叠 横纹在上 透出底部的竖纹 条纹
 
-		for (var i = 0; i < rectObj1Array.length; i += 1) {  //横着一次
+        for (var i = 0; i < rectObj1Array.length; i += 1) {  //横着一次
 			for (var j = 0; j < rectObj2Array.length; j += 1) {
-		var rectObjNotSame = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		rectObjNotSame.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObjNotSame.setAttribute("height",rectObj1Array[i][0]);
-		rectObjNotSame.setAttribute("width",rectObj2Array[j][0]);
-		rectObjNotSame.setAttribute('x', rectObj2Array[j][1]);
-		rectObjNotSame.setAttribute('y', rectObj1Array[i][1]);
-		rectObjNotSame.setAttribute("style","fill:"+color2+";stroke-width:0;stroke:"+color2+";fill-opacity:0.5");  //color 2  
-         document.querySelector('svg').appendChild(rectObjNotSame);
-         }
-		}
+                var rectObjNotSame = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rectObjNotSame.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+                rectObjNotSame.setAttribute("height",rectObj1Array[i][0]);
+                rectObjNotSame.setAttribute("width",rectObj2Array[j][0]);
+                rectObjNotSame.setAttribute('x', rectObj2Array[j][1]);
+                rectObjNotSame.setAttribute('y', rectObj1Array[i][1]);
+                rectObjNotSame.setAttribute("style","fill:"+color2+";stroke-width:0;stroke:"+color2+";fill-opacity:0.5");  //color 2
+                document.querySelector('svg').appendChild(rectObjNotSame);
+            }
+        }
 
-		for (var i = 0; i < rectObj2Array.length; i += 1) { //竖着一次
+        for (var i = 0; i < rectObj2Array.length; i += 1) { //竖着一次
 			for (var j = 0; j < rectObj1Array.length; j += 1) {
-		var rectObjNotSame_a = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		rectObjNotSame_a.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObjNotSame_a.setAttribute("height",rectObj2Array[i][0]);
-		rectObjNotSame_a.setAttribute("width",rectObj1Array[j][0]);
-		rectObjNotSame_a.setAttribute('x', rectObj1Array[j][1]);
-		rectObjNotSame_a.setAttribute('y', rectObj2Array[i][1]);
-		rectObjNotSame_a.setAttribute("style","fill:"+color3+";stroke-width:0;stroke:"+color3+";fill-opacity:0.5");  //color 3   
-         document.querySelector('svg').appendChild(rectObjNotSame_a);
-         }
-		}   
+                var rectObjNotSame_a = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rectObjNotSame_a.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+                rectObjNotSame_a.setAttribute("height",rectObj2Array[i][0]);
+                rectObjNotSame_a.setAttribute("width",rectObj1Array[j][0]);
+                rectObjNotSame_a.setAttribute('x', rectObj1Array[j][1]);
+                rectObjNotSame_a.setAttribute('y', rectObj2Array[i][1]);
+                rectObjNotSame_a.setAttribute("style","fill:"+color3+";stroke-width:0;stroke:"+color3+";fill-opacity:0.5");  //color 3
+                document.querySelector('svg').appendChild(rectObjNotSame_a);
+            }
+        }
 
 
-//绘制同色交叠处绘制实色，这一步一定在上一步后，否则将会有不同颜色交叠的错色块出现在上方
-//相同颜色处无线条  直接判断矩阵即可
+        //绘制同色交叠处绘制实色，这一步一定在上一步后，否则将会有不同颜色交叠的错色块出现在上方
+        //相同颜色处无线条  直接判断矩阵即可
 
 		 //rectObj1Array  主色1
-		 for (var i = 0; i < rectObj1Array.length; i += 1) {
-		for (var j = rectObj1Array.length-1; j >= 0; j -= 1) {
-		var rectObjSame = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		rectObjSame.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObjSame.setAttribute("height",rectObj1Array[i][0]);
-		rectObjSame.setAttribute("width",rectObj1Array[j][0]);
-		rectObjSame.setAttribute('x', rectObj1Array[j][1]);
-		rectObjSame.setAttribute('y', rectObj1Array[i][1]);
-		rectObjSame.setAttribute("style","fill:"+color2+";stroke-width:0;stroke:"+color2);  //color 2
-        document.querySelector('svg').appendChild(rectObjSame);
-			}
-         }
+        for (var i = 0; i < rectObj1Array.length; i += 1) {
+            for (var j = rectObj1Array.length-1; j >= 0; j -= 1) {
+                var rectObjSame = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rectObjSame.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+                rectObjSame.setAttribute("height",rectObj1Array[i][0]);
+                rectObjSame.setAttribute("width",rectObj1Array[j][0]);
+                rectObjSame.setAttribute('x', rectObj1Array[j][1]);
+                rectObjSame.setAttribute('y', rectObj1Array[i][1]);
+                rectObjSame.setAttribute("style","fill:"+color2+";stroke-width:0;stroke:"+color2);  //color 2
+                document.querySelector('svg').appendChild(rectObjSame);
+            }
+        }
 
 		//rectObj2Array  主色2
 		for (var i = 0; i < rectObj2Array.length; i += 1) {
-		for (var j = rectObj1Array.length-1; j >= 0; j -= 1) {
-		var rectObjSame2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		rectObjSame2.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		rectObjSame2.setAttribute("height",rectObj2Array[i][0]);
-		rectObjSame2.setAttribute("width",rectObj2Array[j][0]);
-		rectObjSame2.setAttribute('x', rectObj2Array[j][1]);
-		rectObjSame2.setAttribute('y', rectObj2Array[i][1]);
-		rectObjSame2.setAttribute("style","fill:"+color3+";stroke-width:0;stroke:"+color3);  //color 3
-         document.querySelector('svg').appendChild(rectObjSame2);
-         }
+            for (var j = rectObj1Array.length-1; j >= 0; j -= 1) {
+                var rectObjSame2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rectObjSame2.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+                rectObjSame2.setAttribute("height",rectObj2Array[i][0]);
+                rectObjSame2.setAttribute("width",rectObj2Array[j][0]);
+                rectObjSame2.setAttribute('x', rectObj2Array[j][1]);
+                rectObjSame2.setAttribute('y', rectObj2Array[i][1]);
+                rectObjSame2.setAttribute("style","fill:"+color3+";stroke-width:0;stroke:"+color3);  //color 3
+                document.querySelector('svg').appendChild(rectObjSame2);
+            }
 		}
 
 
-//绘制辅助色横竖纹，随机的透明度（0~0.5）&随机的宽度（0~5），尽量不影响主色彩
-//这一步在最上层，避免有被上一块切断的效果，但是透明度也要低一些
+        //绘制辅助色横竖纹，随机的透明度（0~0.5）&随机的宽度（0~5），尽量不影响主色彩
+        //这一步在最上层，避免有被上一块切断的效果，但是透明度也要低一些
  
 		for (var i = 0; i < colorAuxiliary.length; i += 1) {
-	//横纹
-        var rectObjAx = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		rectObjAx.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		var temph = Math.ceil(Math.random()*5);
-        var tempy = Math.ceil(Math.random()*mysvgWidth);
-		var temptrans =Math.random()/2;
-		rectObjAx.setAttribute("height",temph);
-		rectObjAx.setAttribute("width",mysvgWidth);
-		//rectObjAx.setAttribute('x',0);
-		rectObjAx.setAttribute('y',tempy);
-		rectObjAx.setAttribute("style","fill:"+colorAuxiliary[i]+";stroke-width:0;stroke:"+colorAuxiliary[i]+";fill-opacity:"+temptrans);  //color 2
-        document.querySelector('svg').appendChild(rectObjAx);
-        //竖纹
-		 var rectObjAx_a = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-		 rectObjAx_a.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
-		 rectObjAx_a.setAttribute("width",temph);
-		 rectObjAx_a.setAttribute("height",mysvgWidth);
-		 rectObjAx_a.setAttribute('x', tempy);
-		 rectObjAx_a.setAttribute("style","fill:"+colorAuxiliary[i]+";stroke-width:0;stroke:"+colorAuxiliary[i]+";fill-opacity:"+temptrans);  //color 2
-         document.querySelector('svg').appendChild(rectObjAx_a);
-         }
-
-
-
-	}
-	window.onload = onLoad;
-</script>
-
-<script>
-	//body放前面
+            //横纹
+            var rectObjAx = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            rectObjAx.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+            var temph = Math.ceil(Math.random()*5);
+            var tempy = Math.ceil(Math.random()*mysvgWidth);
+            var temptrans =Math.random()/2;
+            rectObjAx.setAttribute("height",temph);
+            rectObjAx.setAttribute("width",mysvgWidth);
+            //rectObjAx.setAttribute('x',0);
+            rectObjAx.setAttribute('y',tempy);
+            rectObjAx.setAttribute("style","fill:"+colorAuxiliary[i]+";stroke-width:0;stroke:"+colorAuxiliary[i]+";fill-opacity:"+temptrans);  //color 2
+            document.querySelector('svg').appendChild(rectObjAx);
+            //竖纹
+            var rectObjAx_a = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            rectObjAx_a.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#petal');
+            rectObjAx_a.setAttribute("width",temph);
+            rectObjAx_a.setAttribute("height",mysvgWidth);
+            rectObjAx_a.setAttribute('x', tempy);
+            rectObjAx_a.setAttribute("style","fill:"+colorAuxiliary[i]+";stroke-width:0;stroke:"+colorAuxiliary[i]+";fill-opacity:"+temptrans);  //color 2
+            document.querySelector('svg').appendChild(rectObjAx_a);
+            }
+        }
+        window.onload = onLoad;
+        </script>
+    <script>
+    //body放前面
 //svg转png  canvg html2canvas
 // html2canvas(document.querySelector("#div1")).then(canvas => 
 // {document.body.appendChild(canvas)});   
@@ -734,23 +566,7 @@ img.onload = function() {
 
 //发布 上传后 index页面 设置githubpages https://moonmooncha.github.io/Lattice-Generator/
 
-
-
-
-
-
-
-
-
-
-
-</script>
-
-
-
-</head>
-
-
-
+    </script>
 </html>
 
+<!--Torrekie: 2020.10.18 2:40 该项目整体毫无代码规范可言，除大量不工整书写外，出现数量极多的严重低级错误导致影响编辑与项目的实际执行。JS代码过于冗杂，后续我会进行优化修复。大量的JS/CSS置入HTML文件中对项目维护极为不利，在本次修改中我将CSS与HTML分离，并修复了出现在HTML中的多项错误。同时将Q&A更改为弹窗（鼠标悬置提示在移动设备不可用）。-->
